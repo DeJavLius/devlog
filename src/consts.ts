@@ -21,11 +21,11 @@ export const NAV_LINKS: SocialLink[] = [
   },
   {
     href: '/authors',
-    label: 'DeJavLius',
+    label: '작성자',
   },
   {
     href: '/about',
-    label: 'about',
+    label: '정보',
   },
 ]
 
@@ -52,7 +52,7 @@ export const ICON_MAP: IconMap = {
   Website: 'lucide:globe',
   GitHub: 'lucide:github',
   LinkedIn: 'lucide:linkedin',
-  // Twitter: 'lucide:twitter',
-  // Email: 'lucide:mail',
+  Twitter: 'lucide:twitter',
+  Email: 'lucide:mail',
   RSS: 'lucide:rss',
 }
