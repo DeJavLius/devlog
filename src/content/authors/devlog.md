@@ -2,7 +2,7 @@
 name: 'Mlink'
 pronouns: ''
 avatar: '/static/logo.png'
-bio: ':D'
+bio: ':D BE DEV'
 website: 'https://link-devlog.netlify.app'
 # twitter: ''
 github: 'https://github.com/DeJavLius'
