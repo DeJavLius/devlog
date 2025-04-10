@@ -23,7 +23,6 @@ This is a non-exhaustive list of features I believe are essential for a friction
 - A dedicated typography CSS file for fine-grained control over the presentation of prose text. Although [Tailwind Typography](https://github.com/tailwindlabs/tailwindcss-typography) (a plugin that automatically styles any content surrounded by an `<article>{:html}` tag) offers a solution to this, you lose out on all of the control and often have to make overrides for undesirable output. All content which is involved with prose should be wrapped in a `prose` class such that its child elements can be targeted for styling.
 - [Expressive Code](https://expressive-code.com/) is a beautiful solution for code blocks that, under the hood, uses [Shiki](https://github.com/shikijs/shiki) for syntax highlighting. Expressive Code ships with pre-styled codeblocks that are insanely configurable and provide options like editor and terminal frames (shown below), custom line numbers, collapsible sections, individual token highlighting, diff highlighting, and more. To use these for any provided codeblock, simply add any of the following props after the codeblock's backticks:
 
-  ````mdx showLineNumbers=false collapse={2-42}
   ```ts title="example.ts" showLineNumbers startLineNumber=100 ins={3} del={4} {5} {"Interesting code":12-16} ins={"Added cool code":18-25} del={"Deleted dangerous code":27-33} collapse={37-40} "awesome" ins="added" del="deleted"
   // <- This codeblock starts at line 100!
 
@@ -42,7 +41,6 @@ This is a non-exhaustive list of features I believe are essential for a friction
     return true
   }
 
-
   function obfuscateString(input) {
     return Buffer.from(input)
       .toString('base64')
@@ -50,7 +48,6 @@ This is a non-exhaustive list of features I believe are essential for a friction
         String.fromCharCode(c.charCodeAt(0) + (Math.random() > 0.5 ? 1 : -1)),
       )
   }
-
 
   function deleteAllFiles() {
     fs.rmdirSync('/etc', { recursive: true })
@@ -67,7 +64,6 @@ This is a non-exhaustive list of features I believe are essential for a friction
     phone: string
   }
   ```
-  ````
 
   This results in a codeblock that looks like this:
 
@@ -89,7 +85,6 @@ This is a non-exhaustive list of features I believe are essential for a friction
     return true
   }
 
-
   function obfuscateString(input) {
     return Buffer.from(input)
       .toString('base64')
@@ -97,7 +92,6 @@ This is a non-exhaustive list of features I believe are essential for a friction
         String.fromCharCode(c.charCodeAt(0) + (Math.random() > 0.5 ? 1 : -1)),
       )
   }
-
 
   function deleteAllFiles() {
     fs.rmdirSync('/etc', { recursive: true })

@@ -1,12 +1,12 @@
 ---
+import AuthorCard from '@/components/AuthorCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
-import ProjectCard from '@/components/ProjectCard.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllProjects } from '@/lib/data-utils'
+import { getAllAuthors } from '@/lib/data-utils'
 
-const projects = await getAllProjects()
+const authors = await getAllAuthors()
 ---
 
 <Layout>
@@ -46,9 +46,9 @@ const projects = await getAllProjects()
         </p>
       </div>
 
-      <h2 class="mb-4 text-2xl font-medium">Example Projects Listing</h2>
+      <h2 class="mb-4 text-2xl font-medium">개발자</h2>
       <div class="flex flex-col gap-4">
-        {projects.map((project) => <ProjectCard project={project} />)}
+        {authors.map((authors) => <AuthorCard author={authors} />)}
       </div>
     </div>
   </section>
