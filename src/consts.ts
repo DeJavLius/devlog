@@ -19,10 +19,10 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/tags',
     label: '태그',
   },
-  {
-    href: '/authors',
-    label: '작성자',
-  },
+  // {
+  //   href: '/authors',
+  //   label: '작성자',
+  // },
   {
     href: '/about',
     label: '글쓴이',
