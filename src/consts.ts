@@ -25,7 +25,7 @@ export const NAV_LINKS: SocialLink[] = [
   // },
   {
     href: '/about',
-    label: '글쓴이',
+    label: 'About',
   },
 ]
 
