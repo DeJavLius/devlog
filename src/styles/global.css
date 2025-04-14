@@ -11,10 +11,10 @@
 
 @theme inline {
   --font-sans:
-    Geist, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    Pretendard Regular, Geist, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono:
-    Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    Pretendard Regular, Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 
   --color-background: var(--background);
@@ -43,11 +43,21 @@
 }
 
 @font-face {
+  font-family: 'Pretendard Regular';
+  src: url('/fonts/Pretendard-Regular.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0-10FFFF; /* Only Korea */
+}
+
+@font-face {
   font-family: 'Geist';
   src: url('/fonts/GeistVF.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A;
 }
 
 @font-face {
@@ -56,6 +66,7 @@
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A;
 }
 
 :root {

@@ -16,9 +16,19 @@ const authors = await getAllAuthors()
   <section>
     <div class="min-w-full">
       <div class="prose mb-8">
-        <p class="mb-4">
-          astro-erudite is an opinionated, unstyled static blogging template
-          that prioritizes simplicity and performance, built with <Link
+        <p class="text-muted-foreground mb-2 text-sm">
+          백엔드 개발자로 일하고 있으며 풀스택 개발자가 되기 위해 부족한 프론트엔드를 배우고자 
+          React, Astro, Typescript를 활용해 현재 블로그를 개발하는 중입니다. 주 목적이 프론트엔드여서 Netlify로 배포해 
+          이번에는 백엔드 동작을 최소화하려고 합니다.
+        </p>
+        <p class="text-muted-foreground mb-2 text-sm">
+          블로그 테마를 보아 Tailwind CSS도 공부해야겠네요.. 😰 아래에 블로그 테마 개발자의 정보를 그대로 두었습니다. 
+          이 테마를 개발하신 분의 블로그에 가보시면 놀랄 거라고 생각합니다.
+          적어도 저는 놀랐습니다. 일본 여행기 포스트를 한번 보세요.
+        </p>
+        <p class="text-muted-foreground mb-2 text-sm">
+          astro-erudite 테마를 활용해 블로그 제작 중 🏗️
+          활용 스택: <Link
             href="https://astro.build"
             class="text-foreground"
             external
@@ -28,21 +38,25 @@ const authors = await getAllAuthors()
             class="text-foreground"
             external
             underline>Tailwind</Link
-          >, and <Link
+          >, <Link
             href="https://ui.shadcn.com"
             class="text-foreground"
             external
             underline>shadcn/ui</Link
-          >. It provides a clean foundation for your content while being
-          extremely easy to customize.
-        </p>
-        <p>
-          To learn more about the philosophy behind this template, check out the
-          following blog post: <Link
-            href="/blog/the-state-of-static-blogs"
-            class="text-foreground"
-            underline>The State of Static Blogs in 2024</Link
-          >.
+          >, <Link
+          href="https://react.dev/"
+          class="text-foreground"
+          external
+          underline>shadcn/ui</Link
+          >
+
+          <Link 
+          href="https://obsidian.md/" 
+          class="text-foreground"
+          external
+          underline>
+            <img src="/static/obsidian-icon.ico" class="size-6 inline m-auto"/>
+          </Link>로 포스트 로컬 수정
         </p>
       </div>
 
