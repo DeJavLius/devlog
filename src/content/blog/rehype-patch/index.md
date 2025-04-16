@@ -1,13 +1,14 @@
 ---
-title: 'v1.3.0: “Patches in Production”'
-description: 'Whenever you depend on Node packages with missing maintainers, patching becomes a necessary evil.'
+title: "v1.3.0: “Patches in Production”"
+description: Whenever you depend on Node packages with missing maintainers, patching becomes a necessary evil.
 date: 2025-03-21
-tags: ['v1.3.0']
-image: './1200x630.png'
-authors: ['enscribe']
+tags:
+  - v1_3_0
+  - test
+image: ./1200x630.png
+authors:
+  - enscribe
 ---
-
-#test
 
 ---
 
