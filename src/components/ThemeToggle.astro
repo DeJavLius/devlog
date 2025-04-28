@@ -1,4 +1,5 @@
 ---
+import DropdownTheme from './dropdown-theme';
 import { Button } from '@/components/ui/button'
 import { Icon } from 'astro-icon/components'
 
@@ -14,21 +15,14 @@ const themeTest = [
 ];
 ---
 
-<>
-  <Button id="theme-palette" variant="outline" size="icon" title="Choose theme">
+<DropdownTheme>
+  <Button id="theme-palette" variant="outline" size="icon" title="Choose theme" slot="theme-button">
     <Icon
       name="lucide:palette"
       class="size-4 scale-100 rotate-0 transition-all"
     />
   </Button>
-  <ul class="hidden group-hover:block md:invisible md:absolute md:block md:opacity-0 md:group-hover:visible md:group-hover:opacity-100">
-    {themeTest.map((element)=>{
-      <li>
-        {element.value}
-      </li>
-    })}
-  </ul>
-</>
+</DropdownTheme>
 
 <script is:inline data-astro-rerun>
   const theme = (() => {
