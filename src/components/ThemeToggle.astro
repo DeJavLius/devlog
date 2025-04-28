@@ -1,5 +1,5 @@
 ---
-import DropdownTheme from './dropdown-theme';
+import DropdownTheme from './ui/dropdown-theme';
 import { Button } from '@/components/ui/button'
 import { Icon } from 'astro-icon/components'
 
@@ -16,7 +16,7 @@ const themeTest = [
 ---
 
 <DropdownTheme>
-  <Button id="theme-palette" variant="outline" size="icon" title="Choose theme" slot="theme-button">
+  <Button id="theme-palette" variant="outline" size="icon" title="Choose theme" slot="dropdown-button">
     <Icon
       name="lucide:palette"
       class="size-4 scale-100 rotate-0 transition-all"
