@@ -39,13 +39,19 @@ const ThemeMenu = () => {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-background">
+      <DropdownMenuContent 
+        align="end"
+        className="bg-background grid"
+      >
         {THEME_COLORS.map((item) => (
           <DropdownMenuItem key={item.label} asChild>
-            <div
-              onClick={() => setIsOpen(false)}
+            <div onClick={() => setIsOpen(false)}
+              className="h-6.5"
             >
-              {item.label}
+              <div data-color={item.label}
+                className="overflow rounded-sm outline outline-black h-2.5 w-2.5"
+              >
+              </div>
             </div>
           </DropdownMenuItem>
         ))}
