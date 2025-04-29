@@ -8,8 +8,6 @@ authors:
   - enscribe
 ---
 
----
-
 ## A problem (about dead maintainers)
 
 This post talks about changes I've made to astro-erudite in v1.3.0!
