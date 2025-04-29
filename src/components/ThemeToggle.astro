@@ -1,28 +1,19 @@
 ---
-import DropdownTheme from './ui/dropdown-theme';
 import { Button } from '@/components/ui/button'
 import { Icon } from 'astro-icon/components'
-
-const themeTest = [
-        {value: 'dark'},
-        {value: 'floral'},
-        {value: 'old-lace'},
-        {value: 'royal-blue'},
-        {value: 'forest-green'},
-        {value: 'yellow-green'},
-        {value: 'light-gray'},
-        {value: 'light'},
-];
 ---
 
-<DropdownTheme>
-  <Button id="theme-palette" variant="outline" size="icon" title="Choose theme" slot="dropdown-button">
-    <Icon
-      name="lucide:palette"
-      class="size-4 scale-100 rotate-0 transition-all"
-    />
-  </Button>
-</DropdownTheme>
+<Button id="theme-toggle" variant="outline" size="icon" title="Toggle theme">
+  <Icon
+    name="lucide:sun"
+    class="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+  />
+  <Icon
+    name="lucide:moon"
+    class="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+  />
+  <span class="sr-only">Toggle theme</span>
+</Button>
 
 <script is:inline data-astro-rerun>
   const theme = (() => {
@@ -30,20 +21,6 @@ const themeTest = [
     if (['dark', 'light'].includes(localStorageTheme)) {
       return localStorageTheme
     }
-    /* if (
-      [
-        'dark',
-        'floral',
-        'old-lace',
-        'royal-blue',
-        'forest-green',
-        'yellow-green',
-        'light-gray',
-        'light',
-      ].includes(localStorageTheme)
-    ) {
-      return localStorageTheme
-    } */
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark'
     }

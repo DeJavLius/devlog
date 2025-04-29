@@ -15,3 +15,8 @@ export type SocialLink = {
 export type IconMap = {
   [key: string]: string
 }
+
+export type Color = {
+  color: string
+  label: string
+}
