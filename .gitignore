@@ -11,3 +11,6 @@ pnpm-debug.log*
 .idea/
 teaser.pptx
 ~$teaser.pptx
+src/content/.obsidian/workspace.json
+src/content/.obsidian/workspaces.json
+src/content/.obsidian/hotkey.json

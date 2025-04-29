@@ -1,4 +1,4 @@
-import type { IconMap, SocialLink, Site } from '@/types'
+import type { IconMap, SocialLink, Site, Color } from '@/types'
 
 export const SITE: Site = {
   title: 'DevLog',
@@ -56,3 +56,30 @@ export const ICON_MAP: IconMap = {
   Email: 'lucide:mail',
   RSS: 'lucide:rss',
 }
+
+export const THEME_COLORS: Color[] = [
+  {
+    label: 'root', color: '#000000'
+  },
+  {
+    label: 'dark', color: '#000000'
+  },
+  {
+    label: 'floral', color: '#000000'
+  },
+  {
+    label: 'oldLace', color: '#000000'
+  },
+  {
+    label: 'royalBlue', color: '#000000'
+  },
+  {
+    label: 'forestGreen', color: '#000000'
+  },
+  {
+    label: 'yellowGreen', color: '#000000'
+  },
+  {
+    label: 'lightGray', color: '#000000'
+  },
+]

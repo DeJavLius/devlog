@@ -65,7 +65,9 @@ export default defineConfig({
       },
     }),
     mdx(),
-    react(),
+    react(
+      // {experimentalReactChildren: true,}
+    ),
     sitemap(),
     icon(),
   ],
