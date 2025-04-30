@@ -71,7 +71,7 @@ export const THEME_COLORS: Color[] = [
     label: 'royalBlue'
   },
   {
-    label: 'forestGreen'
+    label: 'pistachio'
   },
   {
     label: 'pastelGray'

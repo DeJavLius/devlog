@@ -10,7 +10,7 @@ import { THEME_COLORS } from '@/consts'
 import { Palette } from 'lucide-react'
 
 const ThemeMenu = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleViewTransitionStart = () => {
@@ -25,7 +25,7 @@ const ThemeMenu = () => {
         handleViewTransitionStart,
       )
     }
-  }, [])
+  }, []);
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen} modal={false}>
@@ -33,7 +33,7 @@ const ThemeMenu = () => {
         <Button
           variant="outline"
           size="icon"
-          title="Theme"
+          title="Theme Palette"
         >
           <Palette className="h-5 w-5" />
           <span className="sr-only">Toggle menu</span>
@@ -41,15 +41,20 @@ const ThemeMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end"
-        className="bg-background grid"
+        className="bg-background min-w-[2rem] w-auto"
       >
         {THEME_COLORS.map((item) => (
-          <DropdownMenuItem key={item.label} asChild>
-            <div onClick={() => setIsOpen(false)}
-              className="h-6.5"
+          <DropdownMenuItem key={item.label} 
+            className="size-2"
+          asChild>
+            <div className="h-auto w-auto m-0"
+              onClick={() => {
+                setIsOpen(false);
+              }}
             >
               <div data-color={item.label}
-                className="overflow rounded-sm outline outline-black h-2.5 w-2.5"
+                className="border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 rounded-lg h-4.5 w-4.5 -mx-1"
+                title={item.label === "root" ? "light": item.label}
               >
               </div>
             </div>
@@ -57,7 +62,7 @@ const ThemeMenu = () => {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
 
 export default ThemeMenu
