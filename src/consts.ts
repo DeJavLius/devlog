@@ -59,21 +59,21 @@ export const ICON_MAP: IconMap = {
 
 export const THEME_COLORS: Color[] = [
   {
-    label: 'root'
+    label: 'light',
   },
   {
-    label: 'dark'
+    label: 'dark',
   },
   {
-    label: 'cream'
+    label: 'cream',
   },
   {
-    label: 'royalBlue'
+    label: 'royalBlue',
   },
   {
-    label: 'pistachio'
+    label: 'pistachio',
   },
   {
-    label: 'pastelGray'
+    label: 'pastelGray',
   },
 ]

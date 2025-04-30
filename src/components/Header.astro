@@ -4,9 +4,9 @@ import Link from '@/components/Link.astro'
 import MobileMenu from '@/components/ui/mobile-menu'
 import ThemeMenu from '@/components/ui/theme-menu'
 import { NAV_LINKS, SITE } from '@/consts'
-import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import logo from '../../public/static/logo.svg'
+import ThemeToggle from './ThemeToggle.astro'
 ---
 
 <header
@@ -39,3 +39,38 @@ import logo from '../../public/static/logo.svg'
     </div>
   </div>
 </header>
+
+<script is:inline data-astro-rerun>
+  const THEME_COLORS = [
+    'light',
+    'dark',
+    'cream',
+    'royalBlue',
+    'pistachio',
+    'pastelGray',
+  ]
+
+  const theme = (() => {
+    const localStorageTheme = localStorage?.getItem('theme') ?? ''
+    const themeColors = THEME_COLORS.map((v) => {
+      return v.label
+    })
+
+    if (themeColors.includes(localStorageTheme)) {
+      return localStorageTheme
+    }
+
+    let color = 'light'
+
+    for (let c in themeColors) {
+      if (window.matchMedia(`(prefers-color-scheme: ${c})`).matches) {
+        color = c
+        break
+      }
+    }
+
+    return color
+  })()
+
+  window.localStorage.setItem('theme', theme)
+</script>
