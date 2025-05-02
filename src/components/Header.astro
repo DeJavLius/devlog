@@ -6,7 +6,6 @@ import ThemeMenu from '@/components/ui/theme-menu'
 import { NAV_LINKS, SITE } from '@/consts'
 import { Image } from 'astro:assets'
 import logo from '../../public/static/logo.svg'
-import ThemeToggle from './ThemeToggle.astro'
 ---
 
 <header
@@ -34,43 +33,52 @@ import ThemeToggle from './ThemeToggle.astro'
         }
       </nav>
       <MobileMenu client:load transition:persist />
-      <!-- <ThemeToggle transition:persist /> -->
-      <ThemeMenu client:load transition:persist />
+      <ThemeMenu client:only transition:persist />
     </div>
   </div>
 </header>
 
 <script is:inline data-astro-rerun>
-  const THEME_COLORS = [
+  ;(function () {
+    let header = {
+      themePalette: () => {
+        const localStorageTheme = localStorage?.getItem('theme') ?? 'light'
+        const colors = [
+          'light',
+          'dark',
+          'cream',
+          'royal-blue',
+          'pistachio',
+          'pastel-gray',
+        ]
+
+        if (colors.includes(localStorageTheme)) {
+          return localStorageTheme
+        }
+
+        let color = 'light'
+
+        for (let c in colors) {
+          if (window.matchMedia(`(prefers-color-scheme: ${c})`).matches) {
+            color = c
+            break
+          }
+        }
+
+        return color
+      },
+    }
+
+    document.documentElement.classList.add(header.themePalette())
+    window.localStorage.setItem('theme', header.themePalette())
+  })()
+
+  document.documentElement.classList.remove([
     'light',
     'dark',
     'cream',
-    'royalBlue',
+    'royal-blue',
     'pistachio',
-    'pastelGray',
-  ]
-
-  const theme = (() => {
-    const localStorageTheme = localStorage?.getItem('theme') ?? ''
-    const themeColors = THEME_COLORS.map((v) => {
-      return v.label
-    })
-
-    if (themeColors.includes(localStorageTheme)) {
-      return localStorageTheme
-    }
-
-    let color = 'light'
-
-    for (let c in themeColors) {
-      if (window.matchMedia(`(prefers-color-scheme: ${c})`).matches) {
-        color = c
-        break
-      }
-    }
-
-    return color
-  })()
-
-  window.localStorage.setItem('theme', theme)
+    'pastel-gray',
+  ])
 </script>

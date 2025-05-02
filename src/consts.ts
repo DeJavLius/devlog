@@ -68,12 +68,12 @@ export const THEME_COLORS: Color[] = [
     label: 'cream',
   },
   {
-    label: 'royalBlue',
+    label: 'royal-blue',
   },
   {
     label: 'pistachio',
   },
   {
-    label: 'pastelGray',
+    label: 'pastel-gray',
   },
 ]
