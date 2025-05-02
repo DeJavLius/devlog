@@ -17,6 +17,5 @@ export type IconMap = {
 }
 
 export type Color = {
-  color: string
-  label: string
+  [key: string]: string
 }

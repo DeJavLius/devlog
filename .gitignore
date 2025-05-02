@@ -8,9 +8,9 @@ pnpm-debug.log*
 .env
 .env.production
 .DS_Store
-.idea/
 teaser.pptx
 ~$teaser.pptx
 src/content/.obsidian/workspace.json
 src/content/.obsidian/workspaces.json
 src/content/.obsidian/hotkey.json
+package-lock.json

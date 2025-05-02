@@ -1,10 +1,8 @@
 ---
 import Link from '@/components/Link.astro'
-// import ThemeToggle from '@/components/ThemeToggle.astro'
 import MobileMenu from '@/components/ui/mobile-menu'
 import ThemeMenu from '@/components/ui/theme-menu'
 import { NAV_LINKS, SITE } from '@/consts'
-import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import logo from '../../public/static/logo.svg'
 ---
@@ -34,8 +32,52 @@ import logo from '../../public/static/logo.svg'
         }
       </nav>
       <MobileMenu client:load transition:persist />
-      <!-- <ThemeToggle transition:persist /> -->
-      <ThemeMenu client:load transition:persist />
+      <ThemeMenu client:only transition:persist />
     </div>
   </div>
 </header>
+
+<script is:inline data-astro-rerun>
+  ;(function () {
+    let header = {
+      themePalette: () => {
+        const localStorageTheme = localStorage?.getItem('theme') ?? 'light'
+        const colors = [
+          'light',
+          'dark',
+          'cream',
+          'royal-blue',
+          'pistachio',
+          'pastel-gray',
+        ]
+
+        if (colors.includes(localStorageTheme)) {
+          return localStorageTheme
+        }
+
+        let color = 'light'
+
+        for (let c in colors) {
+          if (window.matchMedia(`(prefers-color-scheme: ${c})`).matches) {
+            color = c
+            break
+          }
+        }
+
+        return color
+      },
+    }
+
+    document.documentElement.classList.add(header.themePalette())
+    window.localStorage.setItem('theme', header.themePalette())
+  })()
+
+  document.documentElement.classList.remove([
+    'light',
+    'dark',
+    'cream',
+    'royal-blue',
+    'pistachio',
+    'pastel-gray',
+  ])
+</script>
