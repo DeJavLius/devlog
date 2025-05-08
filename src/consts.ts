@@ -73,7 +73,4 @@ export const THEME_COLORS: Color[] = [
   {
     label: 'pistachio',
   },
-  {
-    label: 'pastel-gray',
-  },
 ]
