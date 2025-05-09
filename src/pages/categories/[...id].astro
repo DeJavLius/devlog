@@ -35,8 +35,8 @@ const { category, posts } = Astro.props
   />
   <Breadcrumbs
     items={[
-      { href: '/categories', label: '카테고리', icon: 'lucide:list-file' },
-      { label: category, icon: 'lucide:sticky-file-trees' },
+      { href: '/categories', label: '카테고리', icon: 'lucide:book-open-text' },
+      { label: category, icon: 'lucide:book' },
     ]}
   />
 
@@ -45,9 +45,7 @@ const { category, posts } = Astro.props
     <span
       class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
     >
-      <Icon name="lucide:sticky-note" class="size-6 -translate-x-0.5" />{
-        category
-      }
+      <Icon name="lucide:book" class="size-6 -translate-x-0.5" />{category}
     </span>
   </div>
 

@@ -19,3 +19,8 @@ export function readingTime(html: string) {
   const readingTimeMinutes = (wordCount / 200 + 1).toFixed()
   return `${readingTimeMinutes} min read`
 }
+
+export function fileFind(path: string) {
+  const separatePath: string[] = path.split('/')
+  return `/${separatePath[separatePath.length - 1]}`
+}

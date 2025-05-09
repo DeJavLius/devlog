@@ -19,3 +19,8 @@ export type IconMap = {
 export type Color = {
   [key: string]: string
 }
+
+export type Content = {
+  defPath: 'src/content'
+  contentPath: 'blog' | 'projects' | 'authors'
+}

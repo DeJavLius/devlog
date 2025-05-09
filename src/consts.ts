@@ -16,12 +16,8 @@ export const NAV_LINKS: SocialLink[] = [
     label: '게시글',
   },
   {
-    href: '/categories',
-    label: '카테고리',
-  },
-  {
-    href: '/tags',
-    label: '태그',
+    href: '/classification',
+    label: '분류',
   },
   {
     href: '/about',

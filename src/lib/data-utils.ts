@@ -1,4 +1,17 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
+import { fileFind } from './utils.ts'
+import type { Content } from '../types.ts'
+
+class ContentInfo {
+  constructor(
+    private def: Content['defPath'],
+    private content: Content['contentPath'],
+  ) {}
+
+  public prevPath() {
+    return `${this.def}/${this.content}/`
+  }
+}
 
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
@@ -46,9 +59,13 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
 
 export async function getAllCategories(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
+  const contentPath = new ContentInfo('src/content', 'blog')
 
   return posts.reduce((acc, post) => {
-    const category: string = post.filePath!
+    const category: string = post
+      .filePath!.replace(contentPath.prevPath(), '')
+      .replace(fileFind(post.filePath!), '')
+    console.log(category, post.filePath!)
     acc.set(category, (acc.get(category) || 0) + 1)
     return acc
   }, new Map<string, number>())
