@@ -44,6 +44,29 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
   })
 }
 
+export async function getAllCategories(): Promise<Map<string, number>> {
+  const posts = await getAllPosts()
+
+  return posts.reduce((acc, post) => {
+    const category: string = post.filePath!
+    acc.set(category, (acc.get(category) || 0) + 1)
+    return acc
+  }, new Map<string, number>())
+}
+
+export async function getSortedCategories(): Promise<
+  { category: string; count: number }[]
+> {
+  const categoryCounts = await getAllCategories()
+
+  return [...categoryCounts.entries()]
+    .map(([category, count]) => ({ category, count }))
+    .sort((a, b) => {
+      const countDiff = b.count - a.count
+      return countDiff !== 0 ? countDiff : a.category.localeCompare(b.category)
+    })
+}
+
 export async function getAllTags(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
 
