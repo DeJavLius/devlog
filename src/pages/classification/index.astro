@@ -1,0 +1,17 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Categories from '@/components/Categories.astro'
+import PageHead from '@/components/PageHead.astro'
+import Tags from '@/components/Tags.astro'
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout>
+  <PageHead slot="head" title="classification" />
+  <Breadcrumbs items={[{ label: '분류', icon: 'lucide:list-tree' }]} />
+
+  <h2>카테고리</h2>
+  <Categories />
+  <h2>태그</h2>
+  <Tags />
+</Layout>

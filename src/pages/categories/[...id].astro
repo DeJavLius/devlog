@@ -1,0 +1,61 @@
+---
+import BlogCard from '@/components/BlogCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getAllCategories, getPostsByTag } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+export async function getStaticPaths() {
+  const tagMap = await getAllCategories()
+  const uniqueTags = Array.from(tagMap.keys())
+
+  return Promise.all(
+    uniqueTags.map(async (category) => {
+      const posts = await getPostsByTag(category)
+      return {
+        params: { id: category },
+        props: {
+          category,
+          posts,
+        },
+      }
+    }),
+  )
+}
+
+const { category, posts } = Astro.props
+---
+
+<Layout>
+  <PageHead
+    slot="head"
+    title={`Posts inside with "${category}"`}
+    description={`A collection of posts inside with ${category}.`}
+  />
+  <Breadcrumbs
+    items={[
+      { href: '/categories', label: '카테고리', icon: 'lucide:book-open-text' },
+      { label: category, icon: 'lucide:book' },
+    ]}
+  />
+
+  <div class="flex flex-wrap items-center gap-2">
+    <h1 class="text-3xl font-medium">Posts inside with</h1>
+    <span
+      class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
+    >
+      <Icon name="lucide:book" class="size-6 -translate-x-0.5" />{category}
+    </span>
+  </div>
+
+  <ul class="flex flex-col gap-y-4">
+    {
+      posts.map((post) => (
+        <li>
+          <BlogCard entry={post} />
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

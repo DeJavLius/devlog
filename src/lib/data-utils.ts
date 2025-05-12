@@ -1,4 +1,17 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
+import { fileFind } from './utils.ts'
+import type { Content } from '../types.ts'
+
+class ContentInfo {
+  constructor(
+    private def: Content['defPath'],
+    private content: Content['contentPath'],
+  ) {}
+
+  public prevPath() {
+    return `${this.def}/${this.content}/`
+  }
+}
 
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
@@ -42,6 +55,33 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
     const dateB = b.data.startDate?.getTime() || 0
     return dateB - dateA
   })
+}
+
+export async function getAllCategories(): Promise<Map<string, number>> {
+  const posts = await getAllPosts()
+  const contentPath = new ContentInfo('src/content', 'blog')
+
+  return posts.reduce((acc, post) => {
+    const category: string = post
+      .filePath!.replace(contentPath.prevPath(), '')
+      .replace(fileFind(post.filePath!), '')
+    console.log(category, post.filePath!)
+    acc.set(category, (acc.get(category) || 0) + 1)
+    return acc
+  }, new Map<string, number>())
+}
+
+export async function getSortedCategories(): Promise<
+  { category: string; count: number }[]
+> {
+  const categoryCounts = await getAllCategories()
+
+  return [...categoryCounts.entries()]
+    .map(([category, count]) => ({ category, count }))
+    .sort((a, b) => {
+      const countDiff = b.count - a.count
+      return countDiff !== 0 ? countDiff : a.category.localeCompare(b.category)
+    })
 }
 
 export async function getAllTags(): Promise<Map<string, number>> {

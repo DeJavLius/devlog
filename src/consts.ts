@@ -15,13 +15,9 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/blog',
     label: '게시글',
   },
-  {
-    href: '/tags',
-    label: '태그',
-  },
   // {
-  //   href: '/authors',
-  //   label: '작성자',
+  //   href: '/classification',
+  //   label: '분류',
   // },
   {
     href: '/about',
@@ -72,8 +68,5 @@ export const THEME_COLORS: Color[] = [
   },
   {
     label: 'pistachio',
-  },
-  {
-    label: 'pastel-gray',
   },
 ]
