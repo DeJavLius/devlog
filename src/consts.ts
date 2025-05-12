@@ -15,10 +15,10 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/blog',
     label: '게시글',
   },
-  {
-    href: '/classification',
-    label: '분류',
-  },
+  // {
+  //   href: '/classification',
+  //   label: '분류',
+  // },
   {
     href: '/about',
     label: 'About',
