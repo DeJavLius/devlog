@@ -1,19 +1,12 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
-import { fileFind } from './utils.ts'
-import type { Content } from '../types.ts'
+import { Content, AllContent } from '@/types.ts'
+import { ContentPromise } from '@/interface'
 
-class ContentInfo {
-  constructor(
-    private def: Content['defPath'],
-    private content: Content['contentPath'],
-  ) {}
-
-  public prevPath() {
-    return `${this.def}/${this.content}/`
-  }
+async function getContentCollection(content: Content['type']): ContentPromise<CollectionEntry<'blog'>[]> {
+  const p = await getCollection(content)
 }
 
-export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
+export async function getAllPosts(): ContentPromise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
   return posts
     .filter((post) => !post.data.draft)
@@ -59,13 +52,14 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
 
 export async function getAllCategories(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
-  const contentPath = new ContentInfo('src/content', 'blog')
+  // const contentPath = new ContentInfo('src/content', 'blog')
 
   return posts.reduce((acc, post) => {
-    const category: string = post
-      .filePath!.replace(contentPath.prevPath(), '')
-      .replace(fileFind(post.filePath!), '')
-    console.log(category, post.filePath!)
+    // console.log(post)
+
+    const category: string = post.filePath!;
+    // .filePath!.replace(contentPath.prevPath(), '')
+    // .replace(fileFind(post.filePath!), '')
     acc.set(category, (acc.get(category) || 0) + 1)
     return acc
   }, new Map<string, number>())
@@ -114,7 +108,7 @@ export function groupPostsByYear(
   return posts.reduce(
     (acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
       const year = post.data.date.getFullYear().toString()
-      ;(acc[year] ??= []).push(post)
+        ; (acc[year] ??= []).push(post)
       return acc
     },
     {},
