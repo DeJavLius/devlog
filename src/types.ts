@@ -21,6 +21,10 @@ export type Color = {
 }
 
 export type Content = {
-  defPath: 'src/content'
-  contentPath: 'blog' | 'projects' | 'authors'
+  path: 'src/content'
+  type: 'blog' | 'projects' | 'authors'
+}
+
+export type AllContent = {
+  fullPath: `${Content['path']}/${Content['type']}`;
 }
