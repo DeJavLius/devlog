@@ -1,10 +1,14 @@
 ---
-title: '2024 Post'
-description: 'This a dummy post written in the year 2024 (with multiple authors).'
+title: 2024 Post
+description: This a dummy post written in the year 2024 (with multiple authors).
+category: 2024-post
 date: 2024-06-01
-tags: ['v1_0_0']
-image: './2024.png'
-authors: ['enscribe', 'jktrn']
+tags:
+  - v1_0_0
+image: ./2024.png
+authors:
+  - enscribe
+  - jktrn
 ---
 
 This is a dummy post written in the year 2024! Here is a long blog post with heavily nested headers, which can be used to test the table of contents:

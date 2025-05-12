@@ -1,13 +1,9 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
-import { Content, AllContent } from '@/types.ts'
-import { ContentPromise } from '@/interface'
 
-async function getContentCollection(content: Content['type']): ContentPromise<CollectionEntry<'blog'>[]> {
-  const p = await getCollection(content)
-}
-
-export async function getAllPosts(): ContentPromise<CollectionEntry<'blog'>[]> {
+export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
+
+  console.log(posts[0])
   return posts
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -54,12 +50,9 @@ export async function getAllCategories(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
   // const contentPath = new ContentInfo('src/content', 'blog')
 
+  console.log(posts[0])
   return posts.reduce((acc, post) => {
-    // console.log(post)
-
-    const category: string = post.filePath!;
-    // .filePath!.replace(contentPath.prevPath(), '')
-    // .replace(fileFind(post.filePath!), '')
+    const category: string = post.data.category
     acc.set(category, (acc.get(category) || 0) + 1)
     return acc
   }, new Map<string, number>())
@@ -108,7 +101,7 @@ export function groupPostsByYear(
   return posts.reduce(
     (acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
       const year = post.data.date.getFullYear().toString()
-        ; (acc[year] ??= []).push(post)
+      ;(acc[year] ??= []).push(post)
       return acc
     },
     {},
