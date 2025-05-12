@@ -50,7 +50,7 @@ export async function getAllCategories(): Promise<Map<string, number>> {
 
   console.log(posts[0])
   return posts.reduce((acc, post) => {
-    const category: string = post.data.category!
+    const category: string = post.data.category ? post.data.category : post.collection
     acc.set(category, (acc.get(category) || 0) + 1)
     return acc
   }, new Map<string, number>())
