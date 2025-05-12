@@ -1,12 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
-import { Content, AllContent } from '@/types.ts'
-import { ContentPromise } from '@/interface'
 
-async function getContentCollection(content: Content['type']): ContentPromise<CollectionEntry<'blog'>[]> {
-  const p = await getCollection(content)
-}
 
-export async function getAllPosts(): ContentPromise<CollectionEntry<'blog'>[]> {
+export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
   return posts
     .filter((post) => !post.data.draft)
