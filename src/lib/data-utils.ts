@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
+import { Rank } from '@/types.ts'
 
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
@@ -45,13 +46,20 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
   })
 }
 
+export async function getAllPureCategories(): Promise<Array<string>> {
+  const posts = await getAllPosts()
+
+  return posts.map((post) => post.data.category!)
+}
+
 export async function getAllCategories(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
 
-  console.log(posts[0])
   return posts.reduce((acc, post) => {
-    const category: string = post.data.category ? post.data.category : post.collection
-    acc.set(category, (acc.get(category) || 0) + 1)
+    const categories = post.data.category?.split('/')
+    categories?.forEach((category) => {
+      acc.set(category, (acc.get(category) || 0) + 1)
+    })
     return acc
   }, new Map<string, number>())
 }
@@ -136,4 +144,43 @@ export async function getPostsByTag(
 ): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getAllPosts()
   return posts.filter((post) => post.data.tags?.includes(tag))
+}
+
+export async function getPostsByCategory(
+  category: string,
+): Promise<CollectionEntry<'blog'>[]> {
+  const posts = await getAllPosts()
+  return posts.filter((post) => {
+    const categories = post.data.category?.split('/')
+    return categories
+      ? categories?.indexOf(category) === categories!.length - 1
+      : false
+  })
+}
+
+export async function getRankByCategory(
+  category: string,
+  rank: Rank,
+): Promise<Array<string>> {
+  const categories = await getAllPureCategories()
+  return categories
+    .filter((fullCategory) => categoryChecker(fullCategory, category))
+    .map((element) => {
+      return rankedCategory(element, category, rank)
+    })
+}
+
+const categoryChecker = (full: string, category: string): boolean => {
+  const rank = full.split('/')
+  return rank.indexOf(category) > 0 && rank.length > 1
+}
+
+const rankedCategory = (value: string, category: string, rank: Rank) => {
+  const rankCategory = value.split('/')
+
+  if ('high' in rank) {
+    return rankCategory[rankCategory.indexOf(category) - 1]
+  } else {
+    return rankCategory[rankCategory.indexOf(category) + 1]
+  }
 }
