@@ -7,7 +7,7 @@ tags:
   - v1_0_0
 image: ./2023.png
 authors:
-  - enscribe
+  - DeJavLius
 ---
 
 This is a dummy post written in the year 2023.

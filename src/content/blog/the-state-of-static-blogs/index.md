@@ -7,7 +7,7 @@ tags:
   - v1_0_0
 image: ./1200x630.png
 authors:
-  - enscribe
+  - DeJavLius
 ---
 
 ## Introduction

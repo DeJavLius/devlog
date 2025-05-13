@@ -7,8 +7,7 @@ tags:
   - v1_0_0
 image: ./2024.png
 authors:
-  - enscribe
-  - jktrn
+  - DeJavLius
 ---
 
 test
