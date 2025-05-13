@@ -7,8 +7,7 @@ tags:
   - v1_0_0
 image: ./2024.png
 authors:
-  - enscribe
-  - jktrn
+  - DeJavLius
 ---
 
 This is a dummy post written in the year 2024! Here is a long blog post with heavily nested headers, which can be used to test the table of contents:

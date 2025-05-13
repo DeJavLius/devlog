@@ -6,5 +6,5 @@ bio: 'Goals to Master: Develop + Java + Linux'
 # website: 'https://link-devlog.netlify.app'
 # twitter: ''
 # github: 'https://github.com/DeJavLius'
-mail: 'lmo9903@gmail.com'
+mail: 'leeminuk303@gmail.com'
 ---
