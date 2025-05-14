@@ -8,7 +8,7 @@ tags:
   - test
 image: ./1200x630.png
 authors:
-  - DeJavLius
+  - dejavlius
 ---
 
 ## A problem (about dead maintainers)

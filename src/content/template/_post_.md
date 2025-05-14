@@ -1,10 +1,12 @@
 ---
-title: {{ title }}
+title:
+  "{ title }": 
 description: 
 category: 
-date: {{ date }}
+date:
+  "{ date }": 
 tags: 
 image: 
 authors:
-  - DeJavLius
+  - dejavlius
 ---

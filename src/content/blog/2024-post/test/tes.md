@@ -7,7 +7,7 @@ tags:
   - v1_0_0
 image: ''
 authors:
-  - DeJavLius
+  - dejavlius
 ---
 
 tes test
