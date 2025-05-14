@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
-import { Rank } from '@/types.ts'
+import { type Rank } from '@/types.ts'
 
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
@@ -107,7 +107,7 @@ export function groupPostsByYear(
   return posts.reduce(
     (acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
       const year = post.data.date.getFullYear().toString()
-      ;(acc[year] ??= []).push(post)
+        ; (acc[year] ??= []).push(post)
       return acc
     },
     {},
@@ -160,7 +160,7 @@ export async function getPostsByCategory(
 
 export async function getRankByCategory(
   category: string,
-  rank: Rank,
+  rank: Rank['type'],
 ): Promise<Array<string>> {
   const categories = await getAllPureCategories()
   return categories
@@ -175,10 +175,10 @@ const categoryChecker = (full: string, category: string): boolean => {
   return rank.indexOf(category) > 0 && rank.length > 1
 }
 
-const rankedCategory = (value: string, category: string, rank: Rank) => {
+const rankedCategory = (value: string, category: string, rank: Rank['type']) => {
   const rankCategory = value.split('/')
 
-  if ('high' in rank) {
+  if (rank === 'high') {
     return rankCategory[rankCategory.indexOf(category) - 1]
   } else {
     return rankCategory[rankCategory.indexOf(category) + 1]

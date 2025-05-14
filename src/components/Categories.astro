@@ -1,16 +1,31 @@
 ---
 import Link from '@/components/Link.astro'
 import { badgeVariants } from '@/components/ui/badge'
-import { getSortedCategories } from '@/lib/data-utils'
+import { getSortedCategories, getRankByCategory } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
+import { type Rank } from '@/types.ts'
 
-const sortedCategories = await getSortedCategories()
+interface Props {
+  category?: string;
+  rank?: Rank['type'];
+}
+
+const { category, rank } = Astro.props
+
+let categories
+if (!!!rank) {
+  categories = await getSortedCategories()
+} else {
+  categories = await getRankByCategory(category!, rank!)
+}
+
+
 ---
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-wrap gap-2">
     {
-      sortedCategories.map(({ category, count }) => (
+      categories.map(({ category, count }) => (
         <Link
           href={`/categories/${category}`}
           class={badgeVariants({ variant: 'secondary' })}

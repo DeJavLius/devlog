@@ -1,6 +1,7 @@
 ---
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Categories from '@/components/Categories.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllCategories, getPostsByCategory } from '@/lib/data-utils'
@@ -41,7 +42,7 @@ const { category, posts } = Astro.props
   />
 
   <div class="flex flex-wrap items-center gap-2">
-    <h1 class="text-3xl font-medium">연관:</h1>
+    <h1 class="text-3xl font-medium">선택 카테고리: </h1>
     <span
       class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
     >
@@ -50,15 +51,23 @@ const { category, posts } = Astro.props
   </div>
 
   <div class="flex flex-wrap items-center gap-2">
-    <h1 class="text-3xl font-medium">상위 카테고리</h1>
+    <h2 class="text-2xl font-medium">상위 카테고리</h2>
+    <Categories 
+      category={category}
+      rank="high"
+    />
   </div>
 
   <div class="flex flex-wrap items-center gap-2">
-    <h1 class="text-3xl font-medium">하위 카테고리</h1>
+    <h2 class="text-2xl font-medium">하위 카테고리</h2>
+    <Categories
+      category={category}
+      rank="low"
+    />
   </div>
 
   <div class="flex flex-wrap items-center gap-2">
-    <h1 class="text-3xl font-medium">관련 게시글:</h1>
+    <h2 class="text-3xl font-medium">관련 게시글 </h2>
     <span
       class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
     >
