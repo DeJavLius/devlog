@@ -157,30 +157,3 @@ export async function getPostsByCategory(
       : false
   })
 }
-
-export async function getRankByCategory(
-  category: string,
-  rank: Rank['type'],
-): Promise<Array<string>> {
-  const categories = await getAllPureCategories()
-  return categories
-    .filter((fullCategory) => categoryChecker(fullCategory, category))
-    .map((element) => {
-      return rankedCategory(element, category, rank)
-    })
-}
-
-const categoryChecker = (full: string, category: string): boolean => {
-  const rank = full.split('/')
-  return rank.indexOf(category) > 0 && rank.length > 1
-}
-
-const rankedCategory = (value: string, category: string, rank: Rank['type']) => {
-  const rankCategory = value.split('/')
-
-  if (rank === 'high') {
-    return rankCategory[rankCategory.indexOf(category) - 1]
-  } else {
-    return rankCategory[rankCategory.indexOf(category) + 1]
-  }
-}
