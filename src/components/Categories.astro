@@ -13,19 +13,17 @@ interface Props {
 const { category, rank } = Astro.props
 
 let categories
-if (!!!rank) {
+if (rank === undefined) {
   categories = await getSortedCategories()
 } else {
   categories = await getRankByCategory(category!, rank!)
 }
-
-
 ---
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-wrap gap-2">
     {
-      categories.map(({ category, count }) => (
+      categories.map((elment) => {(
         <Link
           href={`/categories/${category}`}
           class={badgeVariants({ variant: 'secondary' })}
@@ -34,7 +32,7 @@ if (!!!rank) {
           {category}
           <span class="text-muted-foreground ml-1.5">({count})</span>
         </Link>
-      ))
+      )})
     }
   </div>
 </div>
