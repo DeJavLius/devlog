@@ -1,11 +1,12 @@
 ---
-title: {{title}}
+title:
+  "{ title }": 
 description: 
-path: src/content/
-date: {{date}}
-tags:
-  - 
+category: 
+date:
+  "{ date }": 
+tags: 
 image: 
 authors:
-  - DeJavLius
+  - dejavlius
 ---

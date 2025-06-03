@@ -20,11 +20,15 @@ export type Color = {
   [key: string]: string
 }
 
+export type Rank = {
+  type: 'high' | 'low'
+}
+
 export type Content = {
   path: 'src/content'
   type: 'blog' | 'projects' | 'authors'
 }
 
 export type AllContent = {
-  fullPath: `${Content['path']}/${Content['type']}`;
+  fullPath: `${Content['path']}/${Content['type']}`
 }

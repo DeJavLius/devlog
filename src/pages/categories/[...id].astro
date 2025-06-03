@@ -1,18 +1,19 @@
 ---
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Categories from '@/components/Categories.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllCategories, getPostsByTag } from '@/lib/data-utils'
+import { getAllCategories, getPostsByCategory } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
 
 export async function getStaticPaths() {
-  const tagMap = await getAllCategories()
-  const uniqueTags = Array.from(tagMap.keys())
+  const categoryMap = await getAllCategories()
+  const uniqueCategories = Array.from(categoryMap.keys())
 
   return Promise.all(
-    uniqueTags.map(async (category) => {
-      const posts = await getPostsByTag(category)
+    uniqueCategories.map(async (category) => {
+      const posts = await getPostsByCategory(category)
       return {
         params: { id: category },
         props: {
@@ -41,7 +42,32 @@ const { category, posts } = Astro.props
   />
 
   <div class="flex flex-wrap items-center gap-2">
-    <h1 class="text-3xl font-medium">Posts inside with</h1>
+    <h1 class="text-3xl font-medium">선택 카테고리: </h1>
+    <span
+      class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
+    >
+      <Icon name="lucide:book" class="size-6 -translate-x-0.5" />{category}
+    </span>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="text-2xl font-medium">상위 카테고리</h2>
+    <Categories 
+      category={category}
+      rank="high"
+    />
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="text-2xl font-medium">하위 카테고리</h2>
+    <Categories
+      category={category}
+      rank="low"
+    />
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="text-3xl font-medium">관련 게시글 </h2>
     <span
       class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
     >

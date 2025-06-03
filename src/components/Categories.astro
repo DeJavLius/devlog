@@ -3,8 +3,12 @@ import Link from '@/components/Link.astro'
 import { badgeVariants } from '@/components/ui/badge'
 import { getSortedCategories } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
+import { type Rank } from '@/types.ts'
 
 const sortedCategories = await getSortedCategories()
+
+console.log(typeof sortedCategories)
+console.log(sortedCategories)
 ---
 
 <div class="flex flex-col gap-4">
