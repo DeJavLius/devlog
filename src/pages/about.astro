@@ -24,72 +24,79 @@ const authors = await getAllAuthors()
         </p>
       </div>
 
+      <div class="flex flex-col gap-4">
+        <div
+          class="has-[a:hover]:bg-secondary/50 overflow-hidden rounded-xl border p-4 transition-colors duration-300 ease-in-out"
+        >
+          <p class="text-muted-foreground mb-2 text-sm">
+            🏗️ astro-erudite 테마 활용 스택: <Link
+              href="https://astro.build"
+              class="text-foreground"
+              external
+              underline
+            >
+              <img
+                src="/static/astro-icon-light-gradient.svg"
+                class="m-auto inline size-6"
+              />Astro
+            </Link>,
+            <Link
+              href="https://tailwindcss.com"
+              class="text-foreground"
+              external
+              underline
+            >
+              <img
+                src="/static/tailwindcss-mark.svg"
+                class="m-auto inline size-6"
+              />tailwind
+            </Link>,
+            <Link
+              href="https://ui.shadcn.com"
+              class="text-foreground"
+              external
+              underline
+            >
+              <img
+                src="/static/shadcn-ui-seeklogo.svg"
+                class="m-auto inline size-6"
+              />shadcn/ui
+            </Link>,
+            <Link
+              href="https://react.dev/"
+              class="text-foreground"
+              external
+              underline
+            >
+              <img
+                src="/static/React-icon.svg"
+                class="m-auto inline size-6"
+              />React
+            </Link>
+          </p>
+          <p class="text-muted-foreground mb-2 text-sm">
+            <Link
+              href="https://obsidian.md/"
+              class="text-foreground"
+              external
+              underline
+            >
+              <img
+                src="/static/obsidian-icon.ico"
+                class="m-auto inline size-6"
+              />Obsidian
+            </Link>로 포스트 로컬 수정
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div>
       <h2 class="mb-4 text-2xl font-medium">개발자</h2>
       <div class="flex flex-col gap-4">
         {authors.map((authors) => <AuthorCard author={authors} />)}
       </div>
     </div>
   </section>
-  <div class="flex flex-col gap-4">
-    <div
-      class="has-[a:hover]:bg-secondary/50 overflow-hidden rounded-xl border p-4 transition-colors duration-300 ease-in-out"
-    >
-      <p class="text-muted-foreground mb-2 text-sm">
-        🏗️ astro-erudite 테마 활용 스택: <Link
-          href="https://astro.build"
-          class="text-foreground"
-          external
-          underline
-        >
-          <img
-            src="/static/astro-icon-light-gradient.svg"
-            class="m-auto inline size-6"
-          />Astro
-        </Link>,
-        <Link
-          href="https://tailwindcss.com"
-          class="text-foreground"
-          external
-          underline
-        >
-          <img
-            src="/static/tailwindcss-mark.svg"
-            class="m-auto inline size-6"
-          />tailwind
-        </Link>,
-        <Link
-          href="https://ui.shadcn.com"
-          class="text-foreground"
-          external
-          underline
-        >
-          <img
-            src="/static/shadcn-ui-seeklogo.svg"
-            class="m-auto inline size-6"
-          />shadcn/ui
-        </Link>,
-        <Link
-          href="https://react.dev/"
-          class="text-foreground"
-          external
-          underline
-        >
-          <img src="/static/React-icon.svg" class="m-auto inline size-6" />React
-        </Link>
-      </p>
-      <p class="text-muted-foreground mb-2 text-sm">
-        <Link
-          href="https://obsidian.md/"
-          class="text-foreground"
-          external
-          underline
-        >
-          <img
-            src="/static/obsidian-icon.ico"
-            class="m-auto inline size-6"
-          />Obsidian
-        </Link>로 포스트 로컬 수정
-      </p>
-    </div>
-  </div>
 </Layout>

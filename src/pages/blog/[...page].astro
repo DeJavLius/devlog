@@ -19,6 +19,8 @@ export async function getStaticPaths({
 
 const { page } = Astro.props
 
+console.log(page)
+
 const postsByYear = groupPostsByYear(page.data)
 const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 ---

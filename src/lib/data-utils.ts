@@ -1,6 +1,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
 import { type Rank } from '@/types.ts'
 
+const BASE_PATH = 'src/content/blog/'
+
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
 
@@ -46,25 +48,17 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
   })
 }
 
-export async function getAllPureCategories(): Promise<Array<string>> {
-  const posts = await getAllPosts()
-
-  return posts.map((post) => post.data.category!)
-}
-
 export async function getAllCategories(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
 
   return posts.reduce((acc, post) => {
-    const categories = post.data.category?.split('/')
-    categories?.forEach((category) => {
-      acc.set(category, (acc.get(category) || 0) + 1)
-    })
+    const category = post.data.category
+    acc.set(category, (acc.get(category) || 0) + 1)
     return acc
   }, new Map<string, number>())
 }
 
-export async function getSortedCategories(): Promise<
+export async function getSortedCategoriesByCount(): Promise<
   { category: string; count: number }[]
 > {
   const categoryCounts = await getAllCategories()
@@ -107,7 +101,7 @@ export function groupPostsByYear(
   return posts.reduce(
     (acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
       const year = post.data.date.getFullYear().toString()
-        ; (acc[year] ??= []).push(post)
+      ;(acc[year] ??= []).push(post)
       return acc
     },
     {},
@@ -150,10 +144,5 @@ export async function getPostsByCategory(
   category: string,
 ): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getAllPosts()
-  return posts.filter((post) => {
-    const categories = post.data.category?.split('/')
-    return categories
-      ? categories?.indexOf(category) === categories!.length - 1
-      : false
-  })
+  return posts.filter((post) => category === post.data.category)
 }

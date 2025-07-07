@@ -1,11 +1,10 @@
 ---
 import Link from '@/components/Link.astro'
 import { badgeVariants } from '@/components/ui/badge'
-import { getSortedCategories } from '@/lib/data-utils'
+import { getSortedCategoriesByCount } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
-import { type Rank } from '@/types.ts'
 
-const sortedCategories = await getSortedCategories()
+const sortedCategories = await getSortedCategoriesByCount()
 
 console.log(typeof sortedCategories)
 console.log(sortedCategories)
