@@ -22,6 +22,34 @@ export async function getStaticPaths() {
   }))
 }
 
+console.log('Type of Astro.url:', typeof Astro.url)
+console.log(
+  'Is Astro.url null or undefined?',
+  Astro.url === null || Astro.url === undefined,
+)
+
+if (Astro.url) {
+  console.log('Astro.url.toString():', Astro.url.toString())
+  console.log('Astro.url.pathname:', Astro.url.pathname)
+  console.log('Astro.url.search:', Astro.url.search) // 쿼리 스트링 원본
+  console.log('Type of Astro.url.searchParams:', typeof Astro.url.searchParams)
+  console.log(
+    'Is Astro.url.searchParams null or undefined?',
+    Astro.url.searchParams === null || Astro.url.searchParams === undefined,
+  )
+
+  if (Astro.url.searchParams) {
+    console.log('Astro.url.searchParams object:', Astro.url.searchParams)
+    console.log('Value for "page" param:', Astro.url.searchParams.get('page'))
+  } else {
+    console.warn('Astro.url.searchParams is not available!')
+  }
+} else {
+  console.error('Astro.url object is not available!')
+}
+console.log('-----------------------')
+// --- DEBUGGING END ---
+
 const post = Astro.props
 const currentPostId = Astro.params.id
 const { Content, headings } = await render(post)
@@ -39,7 +67,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
         items={[
           { href: '/blog', label: 'Blog', icon: 'lucide:archive' },
           {
-            href: '/blog/' + post.data.category,
+            href: '/detail/' + post.data.category,
             label: post.data.category!,
             icon: 'lucide:folder-tree',
           },
