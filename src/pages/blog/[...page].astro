@@ -8,6 +8,8 @@ import Layout from '@/layouts/Layout.astro'
 import { getAllPosts, groupPostsByYear } from '@/lib/data-utils'
 import type { PaginateFunction } from 'astro'
 
+export const prerender = true
+
 export async function getStaticPaths({
   paginate,
 }: {

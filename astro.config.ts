@@ -22,6 +22,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   site: 'http://localhost',
+  output: 'server',
   integrations: [
     expressiveCode({
       themes: ['github-light', 'github-dark'],

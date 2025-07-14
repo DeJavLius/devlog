@@ -6,6 +6,8 @@ import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllAuthors, getPostsByAuthor } from '@/lib/data-utils'
 
+export const prerender = true
+
 export async function getStaticPaths() {
   const authors = await getAllAuthors()
   return authors.map((author) => ({

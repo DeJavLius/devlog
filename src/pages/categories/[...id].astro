@@ -5,6 +5,8 @@ import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllCategories, getPostsByCategory } from '@/lib/data-utils'
 
+export const prerender = true
+
 export async function getStaticPaths() {
   const categoryMap = await getAllCategories()
   const uniqueCategories = Array.from(categoryMap.keys())
