@@ -1,7 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
 
-const BASE_PATH = 'src/content/blog/'
-
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
 
