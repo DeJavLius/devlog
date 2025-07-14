@@ -20,9 +20,12 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
 
+import netlify from '@astrojs/netlify';
+
 export default defineConfig({
-  site: 'http://localhost',
+  site: 'http://https://link-devlog.netlify.app/',
   output: 'server',
+
   integrations: [
     expressiveCode({
       themes: ['github-light', 'github-dark'],
@@ -71,15 +74,19 @@ export default defineConfig({
     sitemap(),
     icon(),
   ],
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   server: {
     port: 1234,
   },
+
   devToolbar: {
     enabled: false,
   },
+
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [
@@ -104,4 +111,6 @@ export default defineConfig({
     ],
     remarkPlugins: [remarkToc, remarkMath, remarkEmoji, remarkSectionize],
   },
+
+  adapter: netlify(),
 })
