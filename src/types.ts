@@ -20,10 +20,6 @@ export type Color = {
   [key: string]: string
 }
 
-export type Rank = {
-  type: 'high' | 'low'
-}
-
 export type Content = {
   path: 'src/content'
   type: 'blog' | 'projects' | 'authors'
