@@ -1,5 +1,5 @@
 ---
-title: "v1.3.0: “Patches in Production”"
+title: 'v1.3.0: “Patches in Production”'
 description: Whenever you depend on Node packages with missing maintainers, patching becomes a necessary evil.
 category: rehype-patch
 date: 2025-03-21

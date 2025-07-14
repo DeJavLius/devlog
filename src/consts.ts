@@ -6,8 +6,8 @@ export const SITE: Site = {
   description:
     '블로그 테마: astro-erudite 기술: Astro, Tailwind, shadcn/ui. \n 경로: https://astro-erudite.vercel.app',
   href: 'https://link-devlog.netlify.app',
-  featuredPostCount: 2,
-  postsPerPage: 5,
+  featuredPostCount: 5,
+  postsPerPage: 10,
 }
 
 export const NAV_LINKS: SocialLink[] = [
