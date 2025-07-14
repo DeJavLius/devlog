@@ -20,7 +20,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
 
-import netlify from '@astrojs/netlify';
+import netlify from '@astrojs/netlify'
 
 export default defineConfig({
   site: 'http://https://link-devlog.netlify.app/',
@@ -113,4 +113,10 @@ export default defineConfig({
   },
 
   adapter: netlify(),
+  experimental: {
+    session: true,
+  },
+  session: {
+    driver: 'redis',
+  },
 })
