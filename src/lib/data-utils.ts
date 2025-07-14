@@ -1,5 +1,4 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
-import { type Rank } from '@/types.ts'
 
 const BASE_PATH = 'src/content/blog/'
 
