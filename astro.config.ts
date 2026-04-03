@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config'
 
 import mdx from '@astrojs/mdx'
+import node from '@astrojs/node'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import icon from 'astro-icon'
@@ -9,7 +10,6 @@ import expressiveCode from 'astro-expressive-code'
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeKatex from 'rehype-katex'
-import rehypePrettyCode from 'rehype-pretty-code'
 import remarkEmoji from 'remark-emoji'
 import remarkMath from 'remark-math'
 import remarkSectionize from 'remark-sectionize'
@@ -20,10 +20,8 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
 
-import netlify from '@astrojs/netlify'
-
 export default defineConfig({
-  site: 'http://https://link-devlog.netlify.app/',
+  site: 'https://link-devlog.netlify.app',
   output: 'server',
 
   integrations: [
@@ -99,24 +97,15 @@ export default defineConfig({
       ],
       rehypeHeadingIds,
       rehypeKatex,
-      [
-        rehypePrettyCode,
-        {
-          theme: {
-            light: 'github-light',
-            dark: 'github-dark',
-          },
-        },
-      ],
     ],
     remarkPlugins: [remarkToc, remarkMath, remarkEmoji, remarkSectionize],
   },
 
-  adapter: netlify(),
-  experimental: {
-    session: true,
-  },
+  adapter: node({ mode: 'standalone' }),
   session: {
     driver: 'redis',
+    options: {
+      url: process.env.REDIS_URL ?? 'redis://localhost:6379',
+    },
   },
 })

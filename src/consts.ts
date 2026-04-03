@@ -3,8 +3,7 @@ import type { IconMap, SocialLink, Site, Color } from '@/types'
 export const SITE: Site = {
   title: 'DevLog',
   locale: 'ko-KR',
-  description:
-    '블로그 테마: astro-erudite 기술: Astro, Tailwind, shadcn/ui. \n 경로: https://astro-erudite.vercel.app',
+  description: '개발 기록과 기술 정리를 담은 블로그',
   href: 'https://link-devlog.netlify.app',
   featuredPostCount: 5,
   postsPerPage: 10,
