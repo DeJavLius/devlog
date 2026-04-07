@@ -34,7 +34,7 @@ This is a list of the various technologies used to build this blog:
 | Components | [shadcn/ui](https://ui.shadcn.com/)                                                        |
 | Content    | [Obsidian](https://obsidian.md/)                                                                  |
 | Codeblocks | [Expressive Code](https://expressive-code.com/), [Shiki](https://github.com/shikijs/shiki) |
-| Deployment | [Netlify](https://www.netlify.com/)                                                        |
+| Deployment | [@astrojs/node](https://docs.astro.build/en/guides/integrations-guide/node/) (Self-hosted) |
 
 ### Color Palette
 
