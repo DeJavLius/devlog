@@ -3,30 +3,14 @@ import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllTags, getPostsByTag } from '@/lib/data-utils'
+import { getPostsByTag } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
 
 export const prerender = false
 
-export async function getStaticPaths() {
-  const tagMap = await getAllTags()
-  const uniqueTags = Array.from(tagMap.keys())
-
-  return Promise.all(
-    uniqueTags.map(async (tag) => {
-      const posts = await getPostsByTag(tag)
-      return {
-        params: { id: tag },
-        props: {
-          tag,
-          posts,
-        },
-      }
-    }),
-  )
-}
-
-const { tag, posts } = Astro.props
+const { id } = Astro.params
+const tag = id || ''
+const posts = await getPostsByTag(tag)
 ---
 
 <Layout>

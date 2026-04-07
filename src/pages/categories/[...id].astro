@@ -3,29 +3,13 @@ import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllCategories, getPostsByCategory } from '@/lib/data-utils'
+import { getPostsByCategory } from '@/lib/data-utils'
 
 export const prerender = false
 
-export async function getStaticPaths() {
-  const categoryMap = await getAllCategories()
-  const uniqueCategories = Array.from(categoryMap.keys())
-
-  return Promise.all(
-    uniqueCategories.map(async (category) => {
-      const posts = await getPostsByCategory(category)
-      return {
-        params: { id: category },
-        props: {
-          category,
-          posts,
-        },
-      }
-    }),
-  )
-}
-
-const { category, posts } = Astro.props
+const { id } = Astro.params
+const category = id || ''
+const posts = await getPostsByCategory(category)
 ---
 
 <Layout>

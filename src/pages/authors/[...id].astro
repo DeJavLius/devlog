@@ -8,15 +8,14 @@ import { getAllAuthors, getPostsByAuthor } from '@/lib/data-utils'
 
 export const prerender = false
 
-export async function getStaticPaths() {
-  const authors = await getAllAuthors()
-  return authors.map((author) => ({
-    params: { id: author.id },
-    props: { author },
-  }))
+const { id } = Astro.params
+const allAuthors = await getAllAuthors()
+const author = allAuthors.find((a) => a.id === id)
+
+if (!author) {
+  return Astro.redirect('/authors')
 }
 
-const { author } = Astro.props
 const authorPosts = await getPostsByAuthor(author.id)
 ---
 
