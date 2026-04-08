@@ -26,8 +26,7 @@ interface Filters {
   tags: boolean
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SERVER_URL = (import.meta.env as any).PUBLIC_SERVER_URL as string | undefined ?? 'http://localhost:3000'
+const SEARCH_API = '/api/search'
 
 interface Props {
   open: boolean
@@ -61,7 +60,7 @@ export default function SearchModal({ open, onClose }: Props) {
       setLoading(true)
       try {
         const params = new URLSearchParams({ q, mode })
-        const res = await fetch(`${SERVER_URL}/api/search?${params}`)
+        const res = await fetch(`${SEARCH_API}?${params}`)
         if (!res.ok) throw new Error('Search failed')
         const data: SearchResponse = await res.json()
         setResults(data.results)
