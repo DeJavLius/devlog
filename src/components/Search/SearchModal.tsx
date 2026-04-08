@@ -22,10 +22,10 @@ interface SearchResponse {
 type FieldKey = 'title' | 'body' | 'category' | 'tags'
 
 const FIELD_LABELS: Record<FieldKey, string> = {
-  title: '제목',
-  body: '내용',
-  category: '카테고리',
-  tags: '태그',
+  title: 'title',
+  body: 'content',
+  category: 'category',
+  tags: 'tag',
 }
 
 const FIELD_ORDER: FieldKey[] = ['title', 'body', 'category', 'tags']
@@ -49,6 +49,7 @@ export default function SearchModal({ open, onClose }: Props) {
     category: '',
     tags: '',
   })
+  const [defaultQuery, setDefaultQuery] = useState('')
   const [mode, setMode] = useState<'or' | 'and'>('or')
   const [results, setResults] = useState<SearchResult[]>([])
   const [total, setTotal] = useState(0)
@@ -57,9 +58,10 @@ export default function SearchModal({ open, onClose }: Props) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const activeFields = useMemo(() => FIELD_ORDER.filter((k) => checks[k]), [checks])
+  const isDefaultMode = activeFields.length === 0
   const hasKeywords = useMemo(
-    () => activeFields.some((k) => keywords[k].trim()),
-    [activeFields, keywords],
+    () => isDefaultMode ? defaultQuery.trim().length > 0 : activeFields.some((k) => keywords[k].trim()),
+    [activeFields, keywords, defaultQuery, isDefaultMode],
   )
 
   const doSearch = useCallback(async () => {
@@ -70,10 +72,16 @@ export default function SearchModal({ open, onClose }: Props) {
       return
     }
 
-    const params = new URLSearchParams({ mode })
-    activeFields.forEach((k) => {
-      if (keywords[k].trim()) params.set(k, keywords[k].trim())
-    })
+    const params = new URLSearchParams({ mode: isDefaultMode ? 'or' : mode })
+    if (isDefaultMode) {
+      const q = defaultQuery.trim()
+      params.set('title', q)
+      params.set('body', q)
+    } else {
+      activeFields.forEach((k) => {
+        if (keywords[k].trim()) params.set(k, keywords[k].trim())
+      })
+    }
 
     setLoading(true)
     setError('')
@@ -95,7 +103,7 @@ export default function SearchModal({ open, onClose }: Props) {
     } finally {
       setLoading(false)
     }
-  }, [activeFields, keywords, mode, hasKeywords])
+  }, [activeFields, keywords, mode, hasKeywords, isDefaultMode, defaultQuery])
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
@@ -110,6 +118,7 @@ export default function SearchModal({ open, onClose }: Props) {
       setFilterOpen(false)
       setChecks({ title: false, body: false, category: false, tags: false })
       setKeywords({ title: '', body: '', category: '', tags: '' })
+      setDefaultQuery('')
       setResults([])
       setError('')
     }
@@ -135,36 +144,38 @@ export default function SearchModal({ open, onClose }: Props) {
 
           {/* 단일 입력 컨테이너 헤더 */}
           <div className="flex items-center gap-2 px-3 py-2">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border bg-background/80 px-3 py-2">
-              <Search className="text-muted-foreground h-4 w-4 shrink-0" />
+            <div className="flex min-w-0 flex-1 items-start gap-3 rounded-lg border bg-background/80 px-3 py-2">
+              <Search className="text-muted-foreground mt-[3px] h-4 w-4 shrink-0" />
 
-              {activeFields.length === 0 ? (
+              {isDefaultMode ? (
                 <input
                   autoFocus
                   className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-                  placeholder="검색"
-                  readOnly
-                  onFocus={() => setFilterOpen(true)}
+                  placeholder="Search"
+                  value={defaultQuery}
+                  onChange={(e) => setDefaultQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Escape' && onClose()}
                 />
               ) : (
-                activeFields.map((key, i) => (
-                  <span key={key} className="flex items-center gap-1">
-                    <span className="text-muted-foreground shrink-0 text-xs font-medium">
-                      {FIELD_LABELS[key]}:
+                <div className="grid min-w-0 flex-1 grid-cols-2 gap-x-4 gap-y-1">
+                  {activeFields.map((key, i) => (
+                    <span key={key} className="flex items-center gap-1">
+                      <span className="text-muted-foreground shrink-0 text-xs font-medium">
+                        {FIELD_LABELS[key]}:
+                      </span>
+                      <input
+                        autoFocus={i === 0}
+                        className="min-w-0 flex-1 bg-transparent text-sm outline-none"
+                        placeholder="..."
+                        value={keywords[key]}
+                        onChange={(e) =>
+                          setKeywords((prev) => ({ ...prev, [key]: e.target.value }))
+                        }
+                        onKeyDown={(e) => e.key === 'Escape' && onClose()}
+                      />
                     </span>
-                    <input
-                      autoFocus={i === 0}
-                      className="min-w-[80px] bg-transparent text-sm outline-none"
-                      placeholder="..."
-                      value={keywords[key]}
-                      onChange={(e) =>
-                        setKeywords((prev) => ({ ...prev, [key]: e.target.value }))
-                      }
-                      onKeyDown={(e) => e.key === 'Escape' && onClose()}
-                    />
-                  </span>
-                ))
+                  ))}
+                </div>
               )}
             </div>
 
@@ -284,7 +295,7 @@ export default function SearchModal({ open, onClose }: Props) {
               </>
             )}
 
-            {!loading && !error && !hasKeywords && activeFields.length > 0 && (
+            {!loading && !error && !hasKeywords && !isDefaultMode && (
               <div className="text-muted-foreground p-6 text-center text-sm">
                 키워드를 입력하면 검색이 시작됩니다.
               </div>
