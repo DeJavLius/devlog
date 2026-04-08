@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { Search, X, ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -37,7 +37,6 @@ interface Props {
 
 export default function SearchModal({ open, onClose }: Props) {
   const [filterOpen, setFilterOpen] = useState(false)
-  // 초기값 전부 해제
   const [checks, setChecks] = useState<Record<FieldKey, boolean>>({
     title: false,
     body: false,
@@ -57,8 +56,11 @@ export default function SearchModal({ open, onClose }: Props) {
   const [error, setError] = useState('')
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const activeFields = FIELD_ORDER.filter((k) => checks[k])
-  const hasKeywords = activeFields.some((k) => keywords[k].trim())
+  const activeFields = useMemo(() => FIELD_ORDER.filter((k) => checks[k]), [checks])
+  const hasKeywords = useMemo(
+    () => activeFields.some((k) => keywords[k].trim()),
+    [activeFields, keywords],
+  )
 
   const doSearch = useCallback(async () => {
     if (!hasKeywords) {
@@ -95,7 +97,6 @@ export default function SearchModal({ open, onClose }: Props) {
     }
   }, [activeFields, keywords, mode, hasKeywords])
 
-  // 키워드·모드 변경 시 debounce 검색
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(doSearch, 300)
@@ -104,7 +105,6 @@ export default function SearchModal({ open, onClose }: Props) {
     }
   }, [doSearch])
 
-  // 모달 닫힐 때 초기화
   useEffect(() => {
     if (!open) {
       setFilterOpen(false)
@@ -118,13 +118,10 @@ export default function SearchModal({ open, onClose }: Props) {
   const toggleCheck = (key: FieldKey) => {
     setChecks((prev) => {
       const next = { ...prev, [key]: !prev[key] }
-      // 체크 해제 시 해당 키워드 초기화
       if (!next[key]) setKeywords((k) => ({ ...k, [key]: '' }))
       return next
     })
   }
-
-  const activeChips = activeFields.filter((k) => keywords[k].trim())
 
   return (
     <Dialog.Root open={open} onOpenChange={(o) => !o && onClose()}>
@@ -136,63 +133,63 @@ export default function SearchModal({ open, onClose }: Props) {
         >
           <Dialog.Title className="sr-only">검색</Dialog.Title>
 
-          {/* 헤더바 */}
-          <div className="flex items-center gap-2 border-b px-4 py-3">
-            <Search className="text-muted-foreground h-4 w-4 shrink-0" />
+          {/* 단일 입력 컨테이너 헤더 */}
+          <div className="flex items-start gap-2 border-b px-3 py-2">
+            <div className="bg-background/80 flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border px-3 py-2">
+              <Search className="text-muted-foreground mt-0.5 h-4 w-4 shrink-0" />
 
-            {/* 활성 칩 or 안내 문구 */}
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
-              {activeChips.length > 0 ? (
-                activeChips.map((k) => (
-                  <span
-                    key={k}
-                    className="bg-primary/10 text-primary flex items-center gap-1 rounded-full px-2 py-0.5 text-xs"
-                  >
-                    {FIELD_LABELS[k]}
-                    <button
-                      type="button"
-                      onClick={() => toggleCheck(k)}
-                      className="hover:text-primary/70"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
+              {activeFields.length === 0 ? (
+                <span className="text-muted-foreground text-sm select-none">검색</span>
+              ) : (
+                activeFields.map((key, i) => (
+                  <span key={key} className="flex items-center gap-1">
+                    <span className="text-muted-foreground shrink-0 text-xs font-medium">
+                      {FIELD_LABELS[key]}:
+                    </span>
+                    <input
+                      autoFocus={i === 0}
+                      className="min-w-[80px] bg-transparent text-sm outline-none"
+                      placeholder="..."
+                      value={keywords[key]}
+                      onChange={(e) =>
+                        setKeywords((prev) => ({ ...prev, [key]: e.target.value }))
+                      }
+                      onKeyDown={(e) => e.key === 'Escape' && onClose()}
+                    />
                   </span>
                 ))
-              ) : (
-                <span className="text-muted-foreground text-sm">
-                  {activeFields.length > 0
-                    ? '키워드를 입력하세요...'
-                    : '▼ 버튼으로 검색 필드를 선택하세요'}
-                </span>
               )}
             </div>
 
-            {/* 필터 토글 */}
-            <button
-              className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
-              onClick={() => setFilterOpen((p) => !p)}
-              title="필터 설정"
-              type="button"
-            >
-              {filterOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </button>
-
-            {/* 닫기 */}
-            <Dialog.Close asChild>
+            <div className="flex shrink-0 items-center gap-0.5 pt-1.5">
               <button
                 className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
+                onClick={() => setFilterOpen((p) => !p)}
+                title="필터 설정"
                 type="button"
               >
-                <X className="h-4 w-4" />
+                {filterOpen ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
               </button>
-            </Dialog.Close>
+
+              <Dialog.Close asChild>
+                <button
+                  className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
+                  type="button"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </Dialog.Close>
+            </div>
           </div>
 
           {/* 필터 패널 */}
           {filterOpen && (
             <div className="border-b px-4 py-3">
-              {/* 체크박스 행 */}
-              <div className="mb-3 flex flex-wrap items-center gap-4 text-sm">
+              <div className="flex flex-wrap items-center gap-4 text-sm">
                 {FIELD_ORDER.map((key) => (
                   <label key={key} className="flex cursor-pointer items-center gap-1.5">
                     <input
@@ -204,7 +201,6 @@ export default function SearchModal({ open, onClose }: Props) {
                     <span>{FIELD_LABELS[key]}</span>
                   </label>
                 ))}
-                {/* OR / AND 토글 */}
                 <div className="ml-auto flex items-center gap-1 rounded-md border p-0.5 text-xs">
                   {(['or', 'and'] as const).map((m) => (
                     <button
@@ -222,29 +218,6 @@ export default function SearchModal({ open, onClose }: Props) {
                   ))}
                 </div>
               </div>
-
-              {/* 체크된 필드별 입력박스 */}
-              {activeFields.length > 0 && (
-                <div className="flex flex-col gap-3">
-                  {activeFields.map((key) => (
-                    <div key={key}>
-                      <label className="text-muted-foreground mb-1 block text-xs font-medium">
-                        {FIELD_LABELS[key]}
-                      </label>
-                      <input
-                        autoFocus={activeFields[0] === key}
-                        className="border-input bg-background focus:ring-primary w-full rounded-md border px-3 py-1.5 text-sm outline-none focus:ring-1"
-                        placeholder={`${FIELD_LABELS[key]} 검색어...`}
-                        value={keywords[key]}
-                        onChange={(e) =>
-                          setKeywords((prev) => ({ ...prev, [key]: e.target.value }))
-                        }
-                        onKeyDown={(e) => e.key === 'Escape' && onClose()}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           )}
 
@@ -304,11 +277,9 @@ export default function SearchModal({ open, onClose }: Props) {
               </>
             )}
 
-            {!loading && !error && !hasKeywords && (
+            {!loading && !error && !hasKeywords && activeFields.length > 0 && (
               <div className="text-muted-foreground p-6 text-center text-sm">
-                {activeFields.length === 0
-                  ? '▼ 버튼을 눌러 검색할 필드를 선택하세요.'
-                  : '선택한 필드에 키워드를 입력하면 검색이 시작됩니다.'}
+                키워드를 입력하면 검색이 시작됩니다.
               </div>
             )}
           </div>
