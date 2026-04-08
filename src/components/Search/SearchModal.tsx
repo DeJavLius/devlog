@@ -144,8 +144,8 @@ export default function SearchModal({ open, onClose }: Props) {
 
           {/* 단일 입력 컨테이너 헤더 */}
           <div className="flex items-center gap-2 px-3 py-2">
-            <div className="flex min-w-0 flex-1 items-start gap-3 rounded-lg border bg-background/80 px-3 py-2">
-              <Search className="text-muted-foreground mt-[3px] h-4 w-4 shrink-0" />
+            <div className="flex min-w-0 flex-1 items-center gap-3 rounded-lg border bg-background/80 px-3 py-2">
+              <Search className="text-muted-foreground h-4 w-4 shrink-0" />
 
               {isDefaultMode ? (
                 <input
