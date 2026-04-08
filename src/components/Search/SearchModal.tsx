@@ -126,20 +126,27 @@ export default function SearchModal({ open, onClose }: Props) {
   return (
     <Dialog.Root open={open} onOpenChange={(o) => !o && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
         <Dialog.Content
-          className="bg-background fixed left-1/2 top-[10%] z-50 w-full max-w-2xl -translate-x-1/2 rounded-xl border shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+          className="fixed left-1/2 top-[10%] z-50 w-full max-w-2xl -translate-x-1/2 rounded-xl border bg-background/80 shadow-xl outline-none backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 overflow-hidden"
           aria-describedby={undefined}
         >
           <Dialog.Title className="sr-only">검색</Dialog.Title>
 
           {/* 단일 입력 컨테이너 헤더 */}
-          <div className="flex items-start gap-2 border-b px-3 py-2">
-            <div className="bg-background/80 flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border px-3 py-2">
-              <Search className="text-muted-foreground mt-0.5 h-4 w-4 shrink-0" />
+          <div className="flex items-center gap-2 px-3 py-2">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border bg-background/80 px-3 py-2">
+              <Search className="text-muted-foreground h-4 w-4 shrink-0" />
 
               {activeFields.length === 0 ? (
-                <span className="text-muted-foreground text-sm select-none">검색</span>
+                <input
+                  autoFocus
+                  className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                  placeholder="검색"
+                  readOnly
+                  onFocus={() => setFilterOpen(true)}
+                  onKeyDown={(e) => e.key === 'Escape' && onClose()}
+                />
               ) : (
                 activeFields.map((key, i) => (
                   <span key={key} className="flex items-center gap-1">
@@ -161,7 +168,7 @@ export default function SearchModal({ open, onClose }: Props) {
               )}
             </div>
 
-            <div className="flex shrink-0 items-center gap-0.5 pt-1.5">
+            <div className="flex shrink-0 items-center gap-0.5">
               <button
                 className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
                 onClick={() => setFilterOpen((p) => !p)}
@@ -239,7 +246,7 @@ export default function SearchModal({ open, onClose }: Props) {
 
             {!loading && !error && results.length > 0 && (
               <>
-                <div className="text-muted-foreground border-b px-4 py-2 text-xs">
+                <div className="text-muted-foreground px-4 py-2 text-xs">
                   {total}개 결과 · {mode.toUpperCase()} 모드
                 </div>
                 <ul>
@@ -247,7 +254,7 @@ export default function SearchModal({ open, onClose }: Props) {
                     <li key={item.id}>
                       <a
                         href={`/blog/${item.id}`}
-                        className="hover:bg-muted flex flex-col gap-1 px-4 py-3 transition-colors"
+                        className="hover:bg-muted/50 flex flex-col gap-1 px-4 py-3 transition-colors"
                         onClick={onClose}
                       >
                         <div className="flex items-center gap-2">
