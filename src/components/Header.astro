@@ -16,10 +16,13 @@ import logo from '../../public/static/logo.svg'
   <div
     class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 p-4"
   >
-    <Link href="/" class="flex shrink-0 items-center gap-2 text-xl font-medium">
-      <Image src={logo} alt="Logo" class="size-8" />
-      {SITE.title}
-    </Link>
+    <div class="flex shrink-0 items-center gap-2">
+      <Link href="/" class="flex items-center gap-2 text-xl font-medium">
+        <Image src={logo} alt="Logo" class="size-8" />
+        {SITE.title}
+      </Link>
+      <SearchTrigger client:load transition:persist />
+    </div>
     <div class="flex items-center gap-2 md:gap-4">
       <nav class="hidden items-center gap-4 text-sm sm:gap-6 md:flex">
         {
@@ -33,7 +36,6 @@ import logo from '../../public/static/logo.svg'
           ))
         }
       </nav>
-      <SearchTrigger client:load transition:persist />
       <LoginButton client:load transition:persist />
       <MobileMenu client:load transition:persist />
       <ThemeMenu client:only transition:persist />
