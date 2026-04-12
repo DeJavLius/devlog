@@ -80,7 +80,8 @@ export default function MyPageClient() {
     );
   }
 
-  const isKakao = !profile.email || profile.email.includes('@kakao');
+  const isPlaceholder = !profile.email || profile.email.endsWith('@placeholder.local');
+  const displayEmail = isPlaceholder ? 'SSO 계정' : profile.email;
 
   return (
     <section className="mx-auto max-w-lg space-y-8 py-8">
@@ -100,7 +101,7 @@ export default function MyPageClient() {
 
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            {isKakao ? '카카오 계정' : profile.email}
+            {displayEmail}
           </p>
           <p className="mt-1 font-semibold">{profile.name}</p>
         </div>

@@ -136,7 +136,9 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
                 <div className="flex items-center gap-1.5">
                   <ProviderIcon provider={provider} />
                   <p className="truncate text-xs text-muted-foreground">
-                    {user.email ?? '카카오 계정'}
+                    {!user.email || user.email.endsWith('@placeholder.local')
+                      ? (provider === 'kakao' ? '카카오 계정' : provider === 'naver' ? '네이버 계정' : 'SSO 계정')
+                      : user.email}
                   </p>
                 </div>
                 <p className="truncate text-sm font-medium mt-0.5">
