@@ -3,6 +3,7 @@ import Link from '@/components/Link.astro'
 import MobileMenu from '@/components/ui/mobile-menu'
 import ThemeMenu from '@/components/ui/theme-menu'
 import SearchTrigger from '@/components/Search/SearchTrigger'
+import LoginButton from '@/components/Auth/LoginButton'
 import { NAV_LINKS, SITE } from '@/consts'
 import { Image } from 'astro:assets'
 import logo from '../../public/static/logo.svg'
@@ -33,6 +34,7 @@ import logo from '../../public/static/logo.svg'
         }
       </nav>
       <SearchTrigger client:load transition:persist />
+      <LoginButton client:load transition:persist />
       <MobileMenu client:load transition:persist />
       <ThemeMenu client:only transition:persist />
     </div>
