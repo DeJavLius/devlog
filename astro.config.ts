@@ -21,7 +21,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  site: 'https://link-devlog.netlify.app',
+  site: 'https://dejavlog.com',
   output: 'server',
 
   integrations: [

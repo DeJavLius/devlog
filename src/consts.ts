@@ -4,7 +4,7 @@ export const SITE: Site = {
   title: 'DevLog',
   locale: 'ko-KR',
   description: '개발 기록과 기술 정리를 담은 블로그',
-  href: 'https://link-devlog.netlify.app',
+  href: 'https://dejavlog.com',
   featuredPostCount: 5,
   postsPerPage: 10,
 }
