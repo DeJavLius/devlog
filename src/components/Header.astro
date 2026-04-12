@@ -21,7 +21,6 @@ import logo from '../../public/static/logo.svg'
         <Image src={logo} alt="Logo" class="size-8" />
         {SITE.title}
       </Link>
-      <SearchTrigger client:load transition:persist />
     </div>
     <div class="flex items-center gap-2 md:gap-4">
       <nav class="hidden items-center gap-4 text-sm sm:gap-6 md:flex">
@@ -38,6 +37,7 @@ import logo from '../../public/static/logo.svg'
       </nav>
       <LoginButton client:load transition:persist />
       <MobileMenu client:load transition:persist />
+      <SearchTrigger client:load transition:persist />
       <ThemeMenu client:only transition:persist />
     </div>
   </div>
