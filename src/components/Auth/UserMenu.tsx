@@ -100,48 +100,62 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
         {/* 헤더 트리거 버튼 */}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="text-sm font-medium text-foreground/60 hover:text-foreground/80 transition-colors max-w-[8rem] truncate"
+          className="text-foreground/60 hover:text-foreground/80 max-w-[8rem] truncate text-sm font-medium transition-colors"
         >
           {truncated}
         </button>
 
         {/* 카드 팝업 */}
         {open && (
-          <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-xl border bg-background p-4 shadow-lg">
+          <div className="bg-background absolute top-full right-0 z-50 mt-2 w-64 rounded-xl border p-4 shadow-lg">
             {/* 닫기 버튼 */}
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-2 p-1 text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground absolute top-2 right-2 p-1 transition-colors"
               aria-label="닫기"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
 
             {/* 프로필 영역 */}
-            <div className="flex items-center gap-3 mb-4">
+            <div className="mb-4 flex items-center gap-3">
               {user.image ? (
                 <img
                   src={user.image}
                   alt={user.name}
-                  className="size-12 rounded-full object-cover shrink-0 ring-2 ring-muted"
+                  className="ring-muted size-12 shrink-0 rounded-full object-cover ring-2"
                 />
               ) : (
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-bold ring-2 ring-muted">
+                <div className="bg-muted ring-muted flex size-12 shrink-0 items-center justify-center rounded-full text-sm font-bold ring-2">
                   {(user.name || '?').charAt(0).toUpperCase()}
                 </div>
               )}
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <ProviderIcon provider={provider} />
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p className="text-muted-foreground truncate text-xs">
                     {!user.email || user.email.endsWith('@placeholder.local')
-                      ? (provider === 'kakao' ? '카카오 계정' : provider === 'naver' ? '네이버 계정' : 'SSO 계정')
+                      ? provider === 'kakao'
+                        ? '카카오 계정'
+                        : provider === 'naver'
+                          ? '네이버 계정'
+                          : 'SSO 계정'
                       : user.email}
                   </p>
                 </div>
-                <p className="truncate text-sm font-medium mt-0.5">
+                <p className="mt-0.5 truncate text-sm font-medium">
                   별명: {user.nickname || user.name || '…'}
                 </p>
               </div>
@@ -152,22 +166,25 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
               <Button
                 asChild
                 size="sm"
-                className="flex-1 text-xs bg-red-100 text-red-700 hover:bg-red-200 border-red-200 border"
+                className="flex-1 border bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200"
                 onClick={() => setOpen(false)}
               >
                 <a href="/mypage">내 정보</a>
               </Button>
               <Button
                 size="sm"
-                className="flex-1 text-xs bg-yellow-100 text-yellow-800 hover:bg-yellow-200 border-yellow-200 border"
+                className="flex-1 border border-yellow-200 bg-yellow-100 text-xs text-yellow-800 hover:bg-yellow-200"
                 onClick={handleLogout}
               >
                 로그아웃
               </Button>
               <Button
                 size="sm"
-                className="flex-1 text-xs bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200 border"
-                onClick={() => { setOpen(false); setWithdrawOpen(true); }}
+                className="flex-1 border border-red-200 bg-red-100 text-xs text-red-700 hover:bg-red-200"
+                onClick={() => {
+                  setOpen(false)
+                  setWithdrawOpen(true)
+                }}
               >
                 가입 탈퇴
               </Button>
@@ -182,5 +199,5 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
         onConfirm={handleWithdraw}
       />
     </>
-  );
+  )
 }
