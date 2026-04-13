@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Layout from '@/layouts/Layout.astro'
 import { getAdjacentPosts, getAllPosts, parseAuthors } from '@/lib/data-utils'
+import PostReactions from '@/components/PostReactions'
+import PostComments from '@/components/PostComments'
 import { formatDate, readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
@@ -164,6 +166,11 @@ const authors = await parseAuthors(post.data.authors ?? [])
     <article class="prose col-start-2 max-w-none">
       <Content />
     </article>
+
+    <div class="col-start-2 flex flex-col gap-y-10 mt-4">
+      <PostReactions postId={currentPostId} client:load />
+      <PostComments postId={currentPostId} client:load />
+    </div>
 
     <PostNavigation prevPost={prev} nextPost={next} />
   </section>
