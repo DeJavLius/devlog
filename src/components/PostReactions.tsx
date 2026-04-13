@@ -131,7 +131,7 @@ export default function PostReactions({ postId }: Props) {
         </button>
 
         {pickerOpen && (
-          <div className="absolute bottom-full left-0 mb-2 flex gap-1 rounded-xl border bg-popover p-2 shadow-md z-10">
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex gap-1 rounded-xl border bg-popover p-2 shadow-md z-10">
             {EMOJI_LIST.map((emoji) => (
               <button
                 key={emoji}
