@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { API_BASE } from '@/lib/api';
 import { useSession } from '@/components/Auth/hooks/useSession';
 import { Button } from '@/components/ui/button';
@@ -212,7 +212,7 @@ export default function PostComments({ postId }: Props) {
         body: JSON.stringify({ postId, content: text, parentId }),
       });
       if (!res.ok) throw new Error('API error');
-      await fetchComments();
+      fetchComments();
       if (parentId) {
         setReplyingTo(null);
       } else {

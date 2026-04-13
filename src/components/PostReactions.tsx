@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { API_BASE } from '@/lib/api';
 import { useSession } from '@/components/Auth/hooks/useSession';
 import LoginModal from '@/components/Auth/LoginModal';
