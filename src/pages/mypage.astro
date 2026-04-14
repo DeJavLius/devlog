@@ -2,11 +2,18 @@
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
-import MyPageClient from '@/components/Auth/MyPageClient'
+import ProfileCard from '@/components/MyPage/ProfileCard'
+import SSOLinkCard from '@/components/MyPage/SSOLinkCard'
+import MyComments from '@/components/MyPage/MyComments'
 ---
 
 <Layout>
   <PageHead slot="head" title="내 정보" />
   <Breadcrumbs items={[{ label: '내 정보', icon: 'lucide:user' }]} />
-  <MyPageClient client:load />
+  <section class="mx-auto max-w-lg space-y-6 py-8">
+    <h1 class="text-2xl font-semibold">내 정보</h1>
+    <ProfileCard client:load />
+    <SSOLinkCard client:load />
+    <MyComments client:load />
+  </section>
 </Layout>
