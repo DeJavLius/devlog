@@ -12,6 +12,7 @@ import Layout from '@/layouts/Layout.astro'
 import { getAdjacentPosts, getAllPosts, parseAuthors } from '@/lib/data-utils'
 import PostReactions from '@/components/PostReactions'
 import PostComments from '@/components/PostComments'
+import PostShare from '@/components/PostShare'
 import { formatDate, readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
@@ -168,7 +169,16 @@ const authors = await parseAuthors(post.data.authors ?? [])
     </article>
 
     <div class="col-start-2 flex flex-col gap-y-10 mt-4">
-      <PostReactions postId={currentPostId} client:load />
+      <div class="relative flex items-center justify-center">
+        <PostReactions postId={currentPostId} client:load />
+        <div class="absolute right-0">
+          <PostShare
+            title={post.data.title}
+            url={Astro.url.href}
+            client:load
+          />
+        </div>
+      </div>
       <PostComments postId={currentPostId} client:load />
     </div>
 

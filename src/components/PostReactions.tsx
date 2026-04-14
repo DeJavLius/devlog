@@ -98,10 +98,10 @@ export default function PostReactions({ postId }: Props) {
   const shownReactions = reactions.filter((r) => r.count > 0);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col items-center gap-2">
       {/* 윗줄: 기존 반응 카운트 */}
       {shownReactions.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap justify-center gap-1.5">
           {shownReactions.map((r) => (
             <button
               key={r.emoji}
