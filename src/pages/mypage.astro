@@ -1,10 +1,19 @@
 ---
+import { getCollection } from 'astro:content'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import ProfileCard from '@/components/MyPage/ProfileCard'
 import SSOLinkCard from '@/components/MyPage/SSOLinkCard'
+import AuthorPostsLink from '@/components/MyPage/AuthorPostsLink'
 import MyComments from '@/components/MyPage/MyComments'
+
+const allAuthors = await getCollection('authors')
+const authorMap = Object.fromEntries(
+  allAuthors
+    .filter((a) => a.data.mail)
+    .map((a) => [a.data.mail as string, a.id]),
+)
 ---
 
 <Layout>
@@ -14,6 +23,7 @@ import MyComments from '@/components/MyPage/MyComments'
     <h1 class="text-2xl font-semibold">내 정보</h1>
     <ProfileCard client:load />
     <SSOLinkCard client:load />
+    <AuthorPostsLink authorMap={authorMap} client:load />
     <MyComments client:load />
   </section>
 </Layout>

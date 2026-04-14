@@ -1,6 +1,6 @@
 # DevLog — 개인 기술 블로그
 
-Astro 기반 개인 블로그. 현재 Netlify 서버리스 배포. 추후 Node.js 또는 Spring 백엔드 연동 예정.
+Astro 기반 개인 블로그. Docker 컨테이너로 mlink-linux 서버에 배포되며, NestJS 백엔드(`devlog-server`)와 연동된다.
 
 ## Quick Start
 
@@ -20,7 +20,8 @@ npm run prettier # 코드 포맷 (.ts, .tsx, .css, .astro)
 |---|---|
 | 프레임워크 | Astro 5.x (`output: 'server'` — SSR 기본) |
 | UI | React + Tailwind v4 + shadcn/ui (Radix) |
-| 배포 | Netlify (`@astrojs/netlify` adapter) |
+| 배포 | Docker 컨테이너 (`@astrojs/node` standalone adapter) — mlink-linux `server-app-1` |
+| 백엔드 | NestJS (`devlog-server`) — `https://api.dejavlog.com` |
 | 콘텐츠 | Astro Content Collections (blog / authors / projects) |
 | 아이콘 | astro-icon + `@iconify-json/lucide` |
 | 코드 하이라이팅 | astro-expressive-code (github-light / github-dark 테마) |
@@ -93,7 +94,7 @@ src/
 ## 사이트 설정 (`src/consts.ts`)
 
 ```ts
-SITE.href = 'https://link-devlog.netlify.app'
+SITE.href = 'https://dejavlog.com'
 SITE.locale = 'ko-KR'
 SITE.postsPerPage = 10
 SITE.featuredPostCount = 5
@@ -104,21 +105,10 @@ SITE.featuredPostCount = 5
 ## Gotchas
 
 - **`serise` 오타**: Content Collection 스키마에 `serise` (series 오기)로 정의됨. 수정 시 전체 포스트 frontmatter 일괄 변경 필요
-- **포트 1234**: `astro.config.mjs`에서 고정. 기본값(4321) 아님
+- **포트 1234**: 로컬 개발 시 `astro.config.ts` 기준. 컨테이너 기동 시에는 `PORT=4321`로 덮어씀
 - **patch-package**: `postinstall`에서 자동 실행됨. `node_modules`에 패치 적용 중
-- **Redis 세션**: `astro.config.mjs`에 `session.driver: 'redis'`가 선언되어 있으나 현재 미사용 (서버리스). 백엔드 연동 시 활성화 예정
-
-## 로드맵 (백엔드 연동)
-
-현재는 Astro + Netlify 서버리스로만 운영. 추후 단계:
-
-1. **현재**: Netlify Functions / Edge 활용 (현 상태)
-2. **단기**: Astro API Routes 확장 (`src/pages/api/`) — 댓글, 조회수 등
-3. **장기**: Node.js 또는 Spring 백엔드 서버 분리 → Astro는 프론트엔드 전담
-
-백엔드 연동 시 참고:
-- Astro `server endpoints`: `src/pages/api/*.ts` — `export const GET/POST`
-- 현재 Redis 세션 설정은 해당 단계에 맞춰 활성화
+- **Redis 세션**: `astro.config.ts`의 `session.driver: 'redis'` — 컨테이너 `REDIS_URL` 환경 변수로 연결
+- **API 호출**: 클라이언트는 `PUBLIC_API_URL`(`https://api.dejavlog.com`)로 직접 호출 (crossSubDomainCookies)
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence

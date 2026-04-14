@@ -176,7 +176,7 @@ import PostComments from '@/components/PostComments'
 ## Environment Variables
 
 ```env
-# devlog (.env / Netlify env)
+# devlog (.env / Docker build arg PUBLIC_API_URL)
 PUBLIC_API_URL=https://api.dejavlog.com   # production
 # LOCAL: PUBLIC_API_URL=http://localhost:3000
 ```
