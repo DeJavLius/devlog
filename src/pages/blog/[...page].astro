@@ -3,10 +3,11 @@ export const prerender = true
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import SeriesSection from '@/components/SeriesSection'
 import PaginationComponent from '@/components/ui/pagination'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
-import { getAllPosts, groupPostsByYear } from '@/lib/data-utils'
+import { getAllPosts, getAllSeries, groupPostsByYear } from '@/lib/data-utils'
 import type { PaginateFunction } from 'astro'
 
 export async function getStaticPaths({
@@ -22,6 +23,8 @@ const { page } = Astro.props
 
 const postsByYear = groupPostsByYear(page.data)
 const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
+const seriesItems = await getAllSeries()
+const showSeries = page.currentPage === 1
 ---
 
 <Layout>
@@ -32,6 +35,12 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
       { label: `Page ${page.currentPage}`, icon: 'lucide:folder-open' },
     ]}
   />
+
+  {
+    showSeries && (
+      <SeriesSection items={seriesItems} pageSize={5} client:load />
+    )
+  }
 
   <div class="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8">
     {
