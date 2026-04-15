@@ -38,7 +38,7 @@ const showSeries = page.currentPage === 1
 
   {
     showSeries && (
-      <SeriesSection items={seriesItems} pageSize={5} client:load />
+      <SeriesSection items={seriesItems} pageSize={5} client:only="react" />
     )
   }
 
