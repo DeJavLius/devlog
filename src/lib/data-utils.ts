@@ -19,13 +19,20 @@ function basename(id: string): string {
   return id.split('/').pop() ?? id
 }
 
+function norm(s: string): string {
+  return s.toLowerCase()
+}
+
 function resolvePostBySlug(
   slug: string | null | undefined,
   posts: CollectionEntry<'blog'>[],
 ): CollectionEntry<'blog'> | null {
   if (!slug) return null
+  const nslug = norm(slug)
   return (
-    posts.find((p) => p.id === slug || basename(p.id) === slug) ?? null
+    posts.find(
+      (p) => norm(p.id) === nslug || norm(basename(p.id)) === nslug,
+    ) ?? null
   )
 }
 
@@ -35,10 +42,13 @@ export async function getPostsBySeries(
   const posts = await getAllPosts()
   const inSeries = posts.filter((p) => p.data.series === name)
 
-  const byId = new Map(inSeries.map((p) => [p.id, p]))
-  const byBase = new Map(inSeries.map((p) => [basename(p.id), p]))
-  const resolve = (slug: string | null | undefined) =>
-    slug ? (byId.get(slug) ?? byBase.get(slug) ?? null) : null
+  const byId = new Map(inSeries.map((p) => [norm(p.id), p]))
+  const byBase = new Map(inSeries.map((p) => [norm(basename(p.id)), p]))
+  const resolve = (slug: string | null | undefined) => {
+    if (!slug) return null
+    const n = norm(slug)
+    return byId.get(n) ?? byBase.get(n) ?? null
+  }
 
   const head =
     inSeries.find((p) => !resolve(p.data.prev)) ?? inSeries[0] ?? null
