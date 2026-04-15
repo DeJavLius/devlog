@@ -15,16 +15,102 @@ export async function getRecentPosts(
   return posts.slice(0, count)
 }
 
+function basename(id: string): string {
+  return id.split('/').pop() ?? id
+}
+
+function resolvePostBySlug(
+  slug: string | null | undefined,
+  posts: CollectionEntry<'blog'>[],
+): CollectionEntry<'blog'> | null {
+  if (!slug) return null
+  return (
+    posts.find((p) => p.id === slug || basename(p.id) === slug) ?? null
+  )
+}
+
+export async function getPostsBySeries(
+  name: string,
+): Promise<CollectionEntry<'blog'>[]> {
+  const posts = await getAllPosts()
+  const inSeries = posts.filter((p) => p.data.series === name)
+
+  const byId = new Map(inSeries.map((p) => [p.id, p]))
+  const byBase = new Map(inSeries.map((p) => [basename(p.id), p]))
+  const resolve = (slug: string | null | undefined) =>
+    slug ? (byId.get(slug) ?? byBase.get(slug) ?? null) : null
+
+  const head =
+    inSeries.find((p) => !resolve(p.data.prev)) ?? inSeries[0] ?? null
+  if (!head) return []
+
+  const ordered: CollectionEntry<'blog'>[] = []
+  const visited = new Set<string>()
+  let cursor: CollectionEntry<'blog'> | null = head
+  while (cursor && !visited.has(cursor.id)) {
+    visited.add(cursor.id)
+    ordered.push(cursor)
+    cursor = resolve(cursor.data.next)
+  }
+
+  for (const p of inSeries) {
+    if (!visited.has(p.id)) ordered.push(p)
+  }
+  return ordered
+}
+
+export async function getAllSeries(): Promise<
+  { series: string; count: number; firstPostId: string }[]
+> {
+  const posts = await getAllPosts()
+  const map = new Map<string, CollectionEntry<'blog'>[]>()
+  for (const p of posts) {
+    const s = p.data.series
+    if (!s) continue
+    if (!map.has(s)) map.set(s, [])
+    map.get(s)!.push(p)
+  }
+  const result: { series: string; count: number; firstPostId: string }[] = []
+  for (const [series, list] of map.entries()) {
+    const ordered = await getPostsBySeries(series)
+    result.push({
+      series,
+      count: list.length,
+      firstPostId: ordered[0]?.id ?? list[0].id,
+    })
+  }
+  return result.sort((a, b) => {
+    const d = b.count - a.count
+    return d !== 0 ? d : a.series.localeCompare(b.series)
+  })
+}
+
+export async function getSeriesAdjacent(
+  post: CollectionEntry<'blog'>,
+): Promise<{
+  prev: CollectionEntry<'blog'> | null
+  next: CollectionEntry<'blog'> | null
+}> {
+  const posts = await getAllPosts()
+  return {
+    prev: resolvePostBySlug(post.data.prev, posts),
+    next: resolvePostBySlug(post.data.next, posts),
+  }
+}
+
 export async function getAdjacentPosts(currentId: string): Promise<{
   prev: CollectionEntry<'blog'> | null
   next: CollectionEntry<'blog'> | null
 }> {
   const posts = await getAllPosts()
-  const currentIndex = posts.findIndex((post) => post.id === currentId)
+  const current = posts.find((p) => p.id === currentId)
 
-  if (currentIndex === -1) {
-    return { prev: null, next: null }
+  if (current?.data.series) {
+    return getSeriesAdjacent(current)
   }
+
+  const currentIndex = posts.findIndex((post) => post.id === currentId)
+  if (currentIndex === -1) return { prev: null, next: null }
 
   return {
     next: currentIndex > 0 ? posts[currentIndex - 1] : null,

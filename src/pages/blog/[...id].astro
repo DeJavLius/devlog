@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Link from '@/components/Link.astro'
 import PostHead from '@/components/PostHead.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
+import SeriesInfo from '@/components/SeriesInfo.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import { badgeVariants } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -161,6 +162,17 @@ const authors = await parseAuthors(post.data.authors ?? [])
 
       <PostNavigation prevPost={prev} nextPost={next} />
     </section>
+
+    {
+      post.data.series && (
+        <div class="col-start-2">
+          <SeriesInfo
+            seriesName={post.data.series}
+            currentId={currentPostId}
+          />
+        </div>
+      )
+    }
 
     {headings.length > 0 && <TableOfContents headings={headings} />}
 

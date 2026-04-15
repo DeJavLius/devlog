@@ -1,0 +1,59 @@
+---
+import { getPostsBySeries } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  seriesName: string
+  currentId: string
+}
+
+const { seriesName, currentId } = Astro.props
+const posts = await getPostsBySeries(seriesName)
+const currentIndex = posts.findIndex((p) => p.id === currentId)
+---
+
+<section class="rounded-xl border p-5">
+  <header class="mb-3 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <Icon name="lucide:list-ordered" class="size-4 text-muted-foreground" />
+      <a
+        href={`/series/${encodeURIComponent(seriesName)}`}
+        class="text-sm font-semibold hover:underline"
+      >
+        {seriesName}
+      </a>
+    </div>
+    {
+      currentIndex >= 0 && (
+        <span class="text-xs text-muted-foreground">
+          {currentIndex + 1} / {posts.length}
+        </span>
+      )
+    }
+  </header>
+
+  <ol class="space-y-1.5">
+    {
+      posts.map((p, idx) => {
+        const isCurrent = p.id === currentId
+        return (
+          <li class="flex items-start gap-2 text-sm">
+            <span class="mt-0.5 w-5 shrink-0 text-right text-xs text-muted-foreground">
+              {idx + 1}.
+            </span>
+            {isCurrent ? (
+              <span class="font-medium text-foreground">{p.data.title}</span>
+            ) : (
+              <a
+                href={`/blog/${p.id}`}
+                class="text-muted-foreground hover:text-foreground hover:underline"
+              >
+                {p.data.title}
+              </a>
+            )}
+          </li>
+        )
+      })
+    }
+  </ol>
+</section>

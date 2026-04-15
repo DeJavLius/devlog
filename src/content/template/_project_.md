@@ -1,10 +1,13 @@
 ---
 name:
-description: 
-category: 
-tags: 
-image: 
-link: 
-startDate: {{ date }}
-endDate: {{ date }}
+description:
+category:
+tags:
+image:
+link:
+startDate:
+endDate:
 ---
+# 
+## 개요
+## 참여자

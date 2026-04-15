@@ -1,0 +1,53 @@
+---
+import BlogCard from '@/components/BlogCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getPostsBySeries } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+export const prerender = false
+
+const { id } = Astro.params
+const name = id || ''
+const posts = await getPostsBySeries(name)
+---
+
+<Layout>
+  <PageHead
+    slot="head"
+    title={`Series "${name}"`}
+    description={`시리즈 "${name}" 포스트 모음`}
+  />
+  <Breadcrumbs
+    items={[
+      { href: '/series', label: '시리즈', icon: 'lucide:list-ordered' },
+      { label: name, icon: 'lucide:list-ordered' },
+    ]}
+  />
+
+  <div class="flex flex-wrap items-center gap-2">
+    <h1 class="text-3xl font-medium">Series</h1>
+    <span
+      class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
+    >
+      <Icon name="lucide:list-ordered" class="size-6 -translate-x-0.5" />{name}
+    </span>
+  </div>
+
+  {
+    posts.length === 0 ? (
+      <p class="mt-6 text-sm text-muted-foreground">
+        해당 시리즈에 포스트가 없습니다.
+      </p>
+    ) : (
+      <ul class="flex flex-col gap-y-4">
+        {posts.map((post) => (
+          <li>
+            <BlogCard entry={post} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>

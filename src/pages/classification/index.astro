@@ -3,6 +3,7 @@ export const prerender = true
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Categories from '@/components/Categories.astro'
 import PageHead from '@/components/PageHead.astro'
+import SeriesList from '@/components/SeriesList.astro'
 import Tags from '@/components/Tags.astro'
 import Layout from '@/layouts/Layout.astro'
 ---
@@ -15,4 +16,6 @@ import Layout from '@/layouts/Layout.astro'
   <Categories />
   <h2>태그</h2>
   <Tags />
+  <h2>시리즈</h2>
+  <SeriesList />
 </Layout>

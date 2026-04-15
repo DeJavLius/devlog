@@ -1,0 +1,29 @@
+---
+import Link from '@/components/Link.astro'
+import { badgeVariants } from '@/components/ui/badge'
+import { getAllSeries } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+const series = await getAllSeries()
+---
+
+<div class="flex flex-col gap-4">
+  <div class="flex flex-wrap gap-2">
+    {
+      series.length === 0 ? (
+        <span class="text-sm text-muted-foreground">아직 시리즈가 없습니다.</span>
+      ) : (
+        series.map(({ series: name, count }) => (
+          <Link
+            href={`/series/${encodeURIComponent(name)}`}
+            class={badgeVariants({ variant: 'secondary' })}
+          >
+            <Icon name="lucide:list-ordered" class="size-3" />
+            {name}
+            <span class="text-muted-foreground ml-1.5">({count})</span>
+          </Link>
+        ))
+      )
+    }
+  </div>
+</div>

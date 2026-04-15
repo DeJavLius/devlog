@@ -59,8 +59,8 @@ src/
   title: string
   description: string
   category: string
-  serise?: string   // ⚠️ 오타 (series의 오기) — 스키마 변경 시 전체 포스트 마이그레이션 필요
-  order?: number    // serise 내 순서
+  series?: string   // 시리즈 마스터 명칭
+  order?: number    // series 내 순서
   date: Date
   image?: ImageMetadata
   tags?: string[]
@@ -104,7 +104,6 @@ SITE.featuredPostCount = 5
 
 ## Gotchas
 
-- **`serise` 오타**: Content Collection 스키마에 `serise` (series 오기)로 정의됨. 수정 시 전체 포스트 frontmatter 일괄 변경 필요
 - **포트 1234**: 로컬 개발 시 `astro.config.ts` 기준. 컨테이너 기동 시에는 `PORT=4321`로 덮어씀
 - **patch-package**: `postinstall`에서 자동 실행됨. `node_modules`에 패치 적용 중
 - **Redis 세션**: `astro.config.ts`의 `session.driver: 'redis'` — 컨테이너 `REDIS_URL` 환경 변수로 연결

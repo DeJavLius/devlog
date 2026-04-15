@@ -1,0 +1,43 @@
+---
+export const prerender = true
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getAllSeries } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+const series = await getAllSeries()
+---
+
+<Layout>
+  <PageHead slot="head" title="Series" />
+  <Breadcrumbs
+    items={[
+      { label: '분류', icon: 'lucide:list-tree', href: '/classification' },
+      { label: '시리즈', icon: 'lucide:list-ordered' },
+    ]}
+  />
+
+  <h1 class="mb-6 text-3xl font-medium">Series</h1>
+
+  {
+    series.length === 0 ? (
+      <p class="text-sm text-muted-foreground">아직 시리즈가 없습니다.</p>
+    ) : (
+      <ul class="flex flex-wrap gap-3">
+        {series.map(({ series: name, count }) => (
+          <li>
+            <a
+              href={`/series/${encodeURIComponent(name)}`}
+              class="bg-secondary hover:bg-secondary/70 flex items-center gap-x-2 rounded-full px-4 py-2 text-sm font-medium transition-colors"
+            >
+              <Icon name="lucide:list-ordered" class="size-4" />
+              <span>{name}</span>
+              <span class="text-xs text-muted-foreground">({count})</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>
